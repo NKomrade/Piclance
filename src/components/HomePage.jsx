@@ -234,18 +234,16 @@ const Homepage = () => {
           </div>
         </section>
 
-        {/* Contact Section */}
         <section
           ref={contactRef}
           className="min-h-screen bg-cover bg-center relative"
-          style={{ backgroundImage: "url('/contact.jpg')", backgroundAttachment: 'fixed' }}
         >
-          <div className="absolute inset-0 bg-neutral-900 opacity-70"></div>
-          <div className="relative z-10 container mx-auto p-6 flex flex-wrap justify-between px-4 md:px-0">
+          <div className="absolute inset-0 opacity-70"></div>
+          <div className="relative z-10 container mx-auto p-10 md:py-16 py-12 flex flex-wrap justify-between px-4 md:px-0">
             {/* Contact Form */}
             <div className="w-full md:w-7/12 mb-8">
-              <h2 className="text-4xl md:text-6xl font-bold mb-6 mt-20">GET IN TOUCH</h2>
-              <form className="space-y-4">
+              <h2 className="text-4xl md:text-6xl font-bold mb-6 mt-20 pl-6">GET IN TOUCH</h2>
+              <form className="space-y-4 pl-6">
                 <div className="flex flex-col">
                   <label className="text-sm font-medium mb-1">First Name *</label>
                   <input type="text" className="border border-gray-400 rounded-md p-3" placeholder="First Name" />
