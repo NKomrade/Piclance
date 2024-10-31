@@ -10,14 +10,13 @@ import ContactPage from "./pages/Contact";   // Import ContactPage
 const App = () => {
   return (
     <Router>
-      {/* Navbar is now included inside individual pages to avoid double rendering */}
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/services" element={<ServicesPage />} />  {/* Route for ServicesPage */}
-        <Route path="/team" element={<TeamPage />} />          {/* Route for TeamPage */}
-        <Route path="/contact" element={<ContactPage />} />    {/* Route for ContactPage */}
+        <Route path="/services" element={<ServicesPage />} /> 
+        <Route path="/team" element={<TeamPage />} />          
+        <Route path="/contact" element={<ContactPage />} />   
       </Routes>
     </Router>
   );
