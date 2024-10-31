@@ -1,4 +1,4 @@
-# Better Hunger
+# Piclance
 
 - Install it and unzip
 - run 'npm install' in root folder
