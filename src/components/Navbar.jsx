@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate, Link } from "react-router-dom"; // Import useNavigate and Link
 import { FiMenu, FiX } from "react-icons/fi"; // Import menu and close icons
 
 const Navbar = () => {
@@ -11,8 +11,9 @@ const Navbar = () => {
       <div className="container mx-auto flex justify-between items-center px-4">
         
         {/* Brand Name on the Left */}
-        <div className="text-2xl font-bold">
-          PICLANCE
+        <div className="text-2xl font-bold flex items-center space-x-2">
+          <img src="/logo.png" alt="Piclance Logo" className="w-8 h-8" /> {/* Image with specified size */}
+          <Link to="/" onClick={() => setMenuOpen(false)}>PICLANCE</Link>
         </div>
 
         {/* Hamburger Icon for Mobile */}
@@ -27,10 +28,10 @@ const Navbar = () => {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-8 text-lg font-semibold">
-          <a href="/" className="hover:text-gray-400 transition duration-300">Home</a>
-          <a href="/services" className="hover:text-gray-400 transition duration-300">Services</a>
-          <a href="/team" className="hover:text-gray-400 transition duration-300">Team</a>
-          <a href="/contact" className="hover:text-gray-400 transition duration-300">Contact</a>
+          <Link to="/" className="hover:text-gray-400 transition duration-300">Home</Link>
+          <Link to="/services" className="hover:text-gray-400 transition duration-300">Services</Link>
+          <Link to="/team" className="hover:text-gray-400 transition duration-300">Team</Link>
+          <Link to="/contact" className="hover:text-gray-400 transition duration-300">Contact</Link>
         </div>
 
         {/* Log In and Register Buttons (hidden on mobile) */}
@@ -54,10 +55,10 @@ const Navbar = () => {
       {menuOpen && (
         <div className="md:hidden bg-black bg-opacity-80 text-white px-6 py-4">
           <div className="flex flex-col space-y-4">
-            <a href="/" onClick={() => setMenuOpen(false)} className="hover:text-gray-400 transition duration-300">Home</a>
-            <a href="/services" onClick={() => setMenuOpen(false)} className="hover:text-gray-400 transition duration-300">Services</a>
-            <a href="/team" onClick={() => setMenuOpen(false)} className="hover:text-gray-400 transition duration-300">Team</a>
-            <a href="/contact" onClick={() => setMenuOpen(false)} className="hover:text-gray-400 transition duration-300">Contact</a>
+            <Link to="/" onClick={() => setMenuOpen(false)} className="hover:text-gray-400 transition duration-300">Home</Link>
+            <Link to="/services" onClick={() => setMenuOpen(false)} className="hover:text-gray-400 transition duration-300">Services</Link>
+            <Link to="/team" onClick={() => setMenuOpen(false)} className="hover:text-gray-400 transition duration-300">Team</Link>
+            <Link to="/contact" onClick={() => setMenuOpen(false)} className="hover:text-gray-400 transition duration-300">Contact</Link>
             <button
               onClick={() => { navigate("/login"); setMenuOpen(false); }}
               className="w-full text-left px-4 py-2 mt-4 rounded-md hover:bg-neutral-900 hover:bg-opacity-50 transition duration-300"
