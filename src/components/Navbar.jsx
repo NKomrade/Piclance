@@ -57,18 +57,17 @@ const Navbar = () => {
         <div className="md:hidden bg-white bg-opacity-20 backdrop-blur-md text-white px-6 py-4 rounded-lg mt-2 shadow-lg">
           <div className="flex flex-col space-y-4">
             <Link to="/" onClick={() => setMenuOpen(false)} className="hover:text-gray-300 transition duration-300">Home</Link>
-            <Link to="/services" onClick={() => setMenuOpen(false)} className="hover:text-gray-300 transition duration-300">Services</Link>
             <Link to="/team" onClick={() => setMenuOpen(false)} className="hover:text-gray-300 transition duration-300">Team</Link>
             <Link to="/contact" onClick={() => setMenuOpen(false)} className="hover:text-gray-300 transition duration-300">Contact</Link>
             <button
               onClick={() => { navigate("/login"); setMenuOpen(false); }}
-              className="w-full text-left px-4 py-2 mt-4 rounded-md hover:bg-white hover:bg-opacity-20 transition duration-300"
+              className="w-full text-center px-4 py-2 mt-4 rounded-md hover:bg-white hover:bg-opacity-20 transition duration-300"
             >
               Log In
             </button>
             <button
               onClick={() => { navigate("/register"); setMenuOpen(false); }}
-              className="w-full text-left px-4 py-2 rounded-md text-black bg-white bg-opacity-80 hover:bg-opacity-90 transition duration-300"
+              className="w-full text-center px-4 py-2 rounded-md text-black bg-white bg-opacity-80 hover:bg-opacity-90 transition duration-300"
             >
               Register
             </button>
