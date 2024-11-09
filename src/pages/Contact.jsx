@@ -8,9 +8,11 @@ const ContactPage = () => {
       {/* Navbar */}
       <Navbar />
 
-      <div className="flex items-center justify-center min-h-screen pt-20">
+      {/* Main Content */}
+      <div className="flex items-center justify-center min-h-screen pt-20 pb-20">
         <div className="absolute inset-0 bg-black opacity-70"></div>
 
+        {/* Contact Form Section */}
         <div className="relative z-10 p-8 bg-black bg-opacity-60 rounded-lg max-w-3xl w-full text-white shadow-lg text-center">
           <h2 className="text-3xl md:text-4xl font-extrabold mb-6">Contact Us</h2>
           <p className="text-base md:text-lg mb-4">
@@ -19,25 +21,39 @@ const ContactPage = () => {
           <form className="space-y-4 text-left">
             <div>
               <label className="block text-sm font-semibold mb-2">Full Name</label>
-              <input type="text" className="w-full px-4 py-2 rounded-md bg-black bg-opacity-80 text-gray-200 border border-gray-700 focus:outline-none focus:border-neutral-300 transition duration-300" />
+              <input
+                type="text"
+                className="w-full px-4 py-2 rounded-md bg-black bg-opacity-80 text-gray-200 border border-gray-700 focus:outline-none focus:border-neutral-300 transition duration-300"
+              />
             </div>
             <div>
               <label className="block text-sm font-semibold mb-2">Email</label>
-              <input type="email" className="w-full px-4 py-2 rounded-md bg-black bg-opacity-80 text-gray-200 border border-gray-700 focus:outline-none focus:border-neutral-300 transition duration-300" />
+              <input
+                type="email"
+                className="w-full px-4 py-2 rounded-md bg-black bg-opacity-80 text-gray-200 border border-gray-700 focus:outline-none focus:border-neutral-300 transition duration-300"
+              />
             </div>
             <div>
               <label className="block text-sm font-semibold mb-2">Message</label>
-              <textarea rows="4" className="w-full px-4 py-2 rounded-md bg-black bg-opacity-80 text-gray-200 border border-gray-700 focus:outline-none focus:border-neutral-300 transition duration-300"></textarea>
+              <textarea
+                rows="4"
+                className="w-full px-4 py-2 rounded-md bg-black bg-opacity-80 text-gray-200 border border-gray-700 focus:outline-none focus:border-neutral-300 transition duration-300"
+              ></textarea>
             </div>
-            <button type="submit" className="w-full py-3 rounded-md bg-white hover:bg-black hover:text-white transition duration-300 font-bold text-black hover:shadow-lg transform hover:scale-105">
+            <button
+              type="submit"
+              className="w-full py-3 rounded-md bg-white hover:bg-black hover:text-white transition duration-300 font-bold text-black hover:shadow-lg transform hover:scale-105"
+            >
               Send Message
             </button>
           </form>
         </div>
       </div>
 
-      {/* Footer */}
-      <Footer />
+      {/* Footer with Higher Z-Index */}
+      <div className="relative z-20">
+        <Footer />
+      </div>
     </div>
   );
 };

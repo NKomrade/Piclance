@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        lobster: ['Lobster', 'cursive'],  // Adding the Lobster font family
+      },
       keyframes: {
         float: {
           '0%, 100%': { transform: 'translateY(0)' },
@@ -17,8 +20,8 @@ export default {
         },
       },
       animation: {
-        float: 'float 1.5s ease-in-out forwards',  // Run once
-        'fade-in': 'fadeIn 1s ease-in forwards',    // Run once
+        float: 'float 1.5s ease-in-out forwards',
+        'fade-in': 'fadeIn 1s ease-in forwards',
       },
     },
   },

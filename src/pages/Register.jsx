@@ -7,7 +7,7 @@ const RegisterPage = () => {
 
   return (
     <div className="min-h-screen bg-cover bg-center relative" style={{ backgroundImage: "url('/main.jpg')", backgroundAttachment: 'fixed' }}>
-      {/* Navbar */}
+    {/* Navbar */}
       <Navbar />
 
       <div className="flex items-center justify-center min-h-screen">
