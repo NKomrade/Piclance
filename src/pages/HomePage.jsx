@@ -1,78 +1,107 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { BackgroundBeams } from "../components/ui/backgroundbeams";
 
 const Homepage = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const slides = ["/aboutus.jpg", "/image-1.jpg", "/services.jpg"];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <div>
-      {/* Navbar Component */}
-      <Navbar />
+    <div className="relative min-h-screen bg-[#1A1A1A]">
+      <BackgroundBeams className="fixed inset-0 z-0" />
+      <div className="relative z-10 flex flex-col min-h-screen">
+        <Navbar />
 
-      {/* Main Container with Fixed Background Image */}
-      <div className="min-h-screen bg-cover bg-center relative" style={{ backgroundImage: "url('/main.jpg')", backgroundAttachment: 'fixed' }}>
-        <div className="absolute inset-0 bg-black opacity-60"></div>
-
-        {/* Centered "OUR SERVICES" Section */}
-        <div className="flex flex-col items-center justify-center min-h-screen text-white px-4 md:px-12">
-          <div className="w-full max-w-6xl bg-black bg-opacity-60 backdrop-blur-md p-8 md:p-12 rounded-md shadow-lg border border-gray-700 animate-fade-in">
-    
-            {/* Heading */}
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-6 md:mb-8 animate-fade-in">
-              OUR SERVICES
+        {/* Hero Section */}
+        <div className="flex min-h-screen">
+          {/* Left Section */}
+          <div className="flex items-center justify-start w-1/2 p-8">
+            <h1 className="text-4xl font-bold text-white">
+              PicLance - Your Media Service Platform
             </h1>
-            
-            {/* Description */}
-            <p className="text-lg md:text-xl text-center leading-relaxed mb-8 md:mb-12">
-              At PicLance, we offer a comprehensive range of media services tailored to elevate your brand. From professional video and photo editing to custom social media management, our skilled team is here to help you make a lasting impact.
-            </p>
-            
-            {/* Call to Action */}
-            <div className="flex justify-center">
-              <button className="px-8 py-3 rounded-md bg-white text-black font-semibold text-lg hover:bg-gray-200 transition duration-300 shadow-md">
-                Learn More
-              </button>
+          </div>
+
+          {/* Right Section with Carousel */}
+          <div className="relative w-1/2 flex items-center justify-center">
+            <div className="w-[600px] rounded-lg overflow-hidden shadow-lg border border-gray-300">
+              <div className="relative w-400 h-[400px]">
+                {slides.map((slide, index) => (
+                  <img
+                    key={index}
+                    src={slide}
+                    alt={`Slide ${index + 1}`}
+                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+                      index === currentSlide ? "opacity-100" : "opacity-0"
+                    }`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Scrollable Service Cards Section */}
-        <div className="flex flex-col items-center relative z-10 pb-10 w-full px-4">
-          
-          {/* Card Container with Full-Width and Responsive Layout */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 w-full">
-            
-            {/* Video Editing Card */}
-            <div className="flex flex-col items-center bg-black bg-opacity-70 p-8 rounded-lg shadow-lg text-gray-200 animate-float w-full">
-              <img src="/image-1.jpg" alt="Video Editing" className="w-full h-64 rounded-md object-cover mb-6" />
-              <h2 className="text-2xl font-bold mb-4 text-center">VIDEO EDITING</h2>
-              <p className="text-base md:text-lg text-center">
-                Transform your raw footage into a polished and professional video that captivates your audience. Our team of experts will handle everything from cuts to transitions, adding the perfect soundtrack and visual effects.
+        {/* Services Section */}
+        <div className="relative min-h-screen">
+          <div className="flex flex-col items-center justify-center min-h-screen text-white px-4 md:px-12 py-16">
+            <div className="w-full max-w-6xl bg-black/60 backdrop-blur-md p-8 md:p-12 rounded-md shadow-lg border border-gray-700">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-6 md:mb-8">
+                OUR SERVICES
+              </h1>
+              <p className="text-lg md:text-xl text-center leading-relaxed mb-8 md:mb-12">
+                At PicLance, we offer a comprehensive range of media services tailored to elevate your brand. From professional video and photo editing to custom social media management, our skilled team is here to help you make a lasting impact.
               </p>
+              <div className="flex justify-center">
+                <button className="px-8 py-3 rounded-md bg-white text-black font-semibold text-lg hover:bg-gray-200 transition-colors duration-300 shadow-md">
+                  Learn More
+                </button>
+              </div>
             </div>
 
-            {/* Photo Editing Card */}
-            <div className="flex flex-col items-center bg-black bg-opacity-70 p-8 rounded-lg shadow-lg text-gray-200 animate-float w-full">
-              <img src="/image-2.jpg" alt="Photo Editing" className="w-full h-64 rounded-md object-cover mb-6" />
-              <h2 className="text-2xl font-bold mb-4 text-center">PHOTO EDITING</h2>
-              <p className="text-base md:text-lg text-center">
-                Enhance your images with professional photo editing that captures your brand's essence. Our team provides high-quality retouching, color grading, and image optimization services.
-              </p>
-            </div>
+            {/* Service Cards */}
+            <div className="container mx-auto mt-16">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="group flex flex-col items-center bg-black/70 p-8 rounded-lg shadow-lg text-gray-200 h-full border border-cyan-500 transition-all duration-300 hover:border-cyan-400
+                  shadow-[0_0_15px_rgba(6,182,212,0.3)] hover:shadow-[0_0_20px_rgba(6,182,212,0.6)]">
+                  <img src="/image-1.jpg" alt="Video Editing" className="w-full h-64 rounded-md object-cover mb-6" />
+                  <h2 className="text-2xl font-bold mb-4 text-center text-cyan-400">VIDEO EDITING</h2>
+                  <p className="text-base md:text-lg text-center">
+                    Transform your raw footage into a polished and professional video that captivates your audience.
+                  </p>
+                </div>
 
-            {/* Social Media Management Card */}
-            <div className="flex flex-col items-center bg-black bg-opacity-70 p-8 rounded-lg shadow-lg text-gray-200 animate-float w-full">
-              <img src="/image-5.jpg" alt="Social Media Management" className="w-full h-64 rounded-md object-cover mb-6" />
-              <h2 className="text-2xl font-bold mb-4 text-center">SOCIAL MEDIA MANAGEMENT</h2>
-              <p className="text-base md:text-lg text-center">
-                Engage with your audience effectively with our social media management services. We create strategies that resonate with your audience, increasing brand visibility and engagement.
-              </p>
+                <div className="group flex flex-col items-center bg-black/70 p-8 rounded-lg shadow-lg text-gray-200 h-full border border-purple-500 transition-all duration-300 hover:border-purple-400
+                  shadow-[0_0_15px_rgba(147,51,234,0.3)] hover:shadow-[0_0_20px_rgba(147,51,234,0.6)]">
+                  <img src="/image-2.jpg" alt="Photo Editing" className="w-full h-64 rounded-md object-cover mb-6" />
+                  <h2 className="text-2xl font-bold mb-4 text-center text-purple-400">PHOTO EDITING</h2>
+                  <p className="text-base md:text-lg text-center">
+                    Enhance your images with professional retouching, color correction, and creative manipulation.
+                  </p>
+                </div>
+
+                <div className="group flex flex-col items-center bg-black/70 p-8 rounded-lg shadow-lg text-gray-200 h-full border border-pink-500 transition-all duration-300 hover:border-pink-400
+                  shadow-[0_0_15px_rgba(236,72,153,0.3)] hover:shadow-[0_0_20px_rgba(236,72,153,0.6)]">
+                  <img src="/image-5.jpg" alt="Social Media Management" className="w-full h-64 rounded-md object-cover mb-6" />
+                  <h2 className="text-2xl font-bold mb-4 text-center text-pink-400">SOCIAL MEDIA MANAGEMENT</h2>
+                  <p className="text-base md:text-lg text-center">
+                    Let us manage your social media presence, creating engaging content, scheduling posts, and growing your online community.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
-        </div> 
+        </div>
+
+        <Footer />
       </div>
-      
-      {/* Footer Component */}
-      <Footer />
     </div>
   );
 };
