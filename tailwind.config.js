@@ -12,7 +12,12 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        lobster: ['Lobster', 'cursive'], // Adding the Lobster font family
+        lobster: ['Lobster', 'cursive'],
+      },
+      animation: {
+        float: 'float 1.5s ease-in-out forwards',
+        'fade-in': 'fadeIn 1s ease-in forwards',
+        marquee: 'marquee 10s linear infinite',
       },
       keyframes: {
         float: {
@@ -23,10 +28,10 @@ module.exports = {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
-      },
-      animation: {
-        float: 'float 1.5s ease-in-out forwards',
-        'fade-in': 'fadeIn 1s ease-in forwards',
+        marquee: {
+          '0%': { transform: 'translateX(100%)' },
+          '100%': { transform: 'translateX(-100%)' },
+        },
       },
     },
   },

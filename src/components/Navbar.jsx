@@ -34,22 +34,6 @@ const Navbar = () => {
           <Link to="/team" className="hover:text-gray-300 transition duration-300">Team</Link>
           <Link to="/contact" className="hover:text-gray-300 transition duration-300">Contact</Link>
         </div>
-
-        {/* Log In and Register Buttons */}
-        <div className="hidden md:flex items-center space-x-4">
-          <button
-            onClick={() => navigate("/login")}
-            className="px-4 py-2 rounded-md hover:bg-white hover:bg-opacity-20 transition duration-300"
-          >
-            Log In
-          </button>
-          <button
-            onClick={() => navigate("/register")}
-            className="px-4 py-2 rounded-md text-black bg-white bg-opacity-80 hover:bg-opacity-90 transition duration-300"
-          >
-            Register
-          </button>
-        </div>
       </div>
 
       {/* Mobile Menu */}
@@ -59,18 +43,6 @@ const Navbar = () => {
             <Link to="/" onClick={() => setMenuOpen(false)} className="hover:text-gray-300 transition duration-300">Home</Link>
             <Link to="/team" onClick={() => setMenuOpen(false)} className="hover:text-gray-300 transition duration-300">Team</Link>
             <Link to="/contact" onClick={() => setMenuOpen(false)} className="hover:text-gray-300 transition duration-300">Contact</Link>
-            <button
-              onClick={() => { navigate("/login"); setMenuOpen(false); }}
-              className="w-full text-center px-4 py-2 mt-4 rounded-md hover:bg-white hover:bg-opacity-20 transition duration-300"
-            >
-              Log In
-            </button>
-            <button
-              onClick={() => { navigate("/register"); setMenuOpen(false); }}
-              className="w-full text-center px-4 py-2 rounded-md text-black bg-white bg-opacity-80 hover:bg-opacity-90 transition duration-300"
-            >
-              Register
-            </button>
           </div>
         </div>
       )}
