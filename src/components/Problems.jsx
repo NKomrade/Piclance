@@ -1,3 +1,4 @@
+// Change design of this component
 import React from "react";
 import { FaEyeSlash, FaClock, FaStar, FaWrench, FaCommentAlt, FaDollarSign } from "react-icons/fa";
 

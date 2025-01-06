@@ -1,3 +1,5 @@
+// responsive ness of this page
+// it should not change with the change in scale size
 import React, { useState, useEffect } from "react";
 
 const HeroSection = () => {
