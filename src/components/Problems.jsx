@@ -1,56 +1,79 @@
-// Change design of this component
-import React from "react";
+import React from 'react';
 import { FaEyeSlash, FaClock, FaStar, FaWrench, FaCommentAlt, FaDollarSign } from "react-icons/fa";
 
 const Problems = () => {
+  const problems = [
+    {
+      icon: FaEyeSlash,
+      color: 'from-blue-500 to-indigo-500',
+      title: 'Lack of Access to Professional Editors',
+      description: 'Struggling to find skilled editors for your projects?'
+    },
+    {
+      icon: FaClock,
+      color: 'from-purple-500 to-pink-500',
+      title: 'Time-Consuming Editing Process',
+      description: 'Spending too much time editing instead of focusing on core tasks?'
+    },
+    {
+      icon: FaStar,
+      color: 'from-pink-500 to-rose-500',
+      title: 'Inconsistent Quality and Reliability',
+      description: 'Uncertain about the quality and consistency of your edits?'
+    },
+    {
+      icon: FaWrench,
+      color: 'from-orange-500 to-red-500',
+      title: 'Limited Tools and Expertise',
+      description: 'Lacking the necessary tools and expertise for professional editing?'
+    },
+    {
+      icon: FaCommentAlt,
+      color: 'from-amber-500 to-orange-500',
+      title: 'Scattered Social Media Management',
+      description: 'Wasting time managing edits across multiple social media platforms?'
+    },
+    {
+      icon: FaDollarSign,
+      color: 'from-emerald-500 to-teal-500',
+      title: 'Budget Constraints for Professional Editing',
+      description: 'Finding professional editing services too expensive?'
+    }
+  ];
+
   return (
-    <div className="problem-section py-32 bg-gradient-to-b from-zinc-800 to-zinc-900"> 
-      <div className="container mx-auto px-4">
-        <h2 className="text-5xl font-bold text-white text-center mb-8">PROBLEMS</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div className="border border-gray-700 border-opacity-50 rounded-lg p-6 flex flex-col items-center transition-all duration-300 ease-in-out transform hover:scale-105">
-            <div className="w-20 h-20 rounded-full bg-indigo-600 flex items-center justify-center mb-4 hover:bg-indigo-500 transition-all duration-300">
-              <FaEyeSlash size={24} className="text-white" />
+    <div className="min-h-screen bg-gradient-to-r from-zinc-800 to-transparent py-20 px-4">
+      <h2 className="text-5xl font-bold text-center mb-16">
+        <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text">
+          PROBLEMS
+        </span>
+      </h2>
+      
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {problems.map((problem, index) => (
+          <div key={index} className="group relative">
+            <div className="absolute -inset-0.5 bg-gradient-to-r opacity-75 blur-lg transition duration-1000 group-hover:opacity-100 group-hover:duration-200 animate-tilt"></div>
+            
+            <div className="relative h-full flex flex-col bg-zinc-900 px-8 py-10 rounded-2xl transition-all duration-300 hover:translate-y-1">
+              <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${problem.color} p-4 mb-6 transform transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}>
+                <problem.icon className="w-full h-full text-white" />
+              </div>
+              
+              <div className="space-y-4">
+                <h3 className="text-xl font-semibold text-white group-hover:text-transparent group-hover:bg-gradient-to-r bg-clip-text transition-all duration-300 ease-out">
+                  {problem.title}
+                </h3>
+                <p className="text-gray-400 group-hover:text-white transition-all duration-300">
+                  {problem.description}
+                </p>
+              </div>
+
+              <div className="absolute bottom-4 right-4 opacity-0 transform translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${problem.color}`}></div>
+              </div>
             </div>
-            <h3 className="text-xl font-medium mb-2 text-white">Lack of Access to Professional Editors</h3>
-            <p className="text-gray-400 text-center">Struggling to find skilled editors for your projects?</p>
           </div>
-          <div className="border border-gray-700 border-opacity-50 rounded-lg p-6 flex flex-col items-center transition-all duration-300 ease-in-out transform hover:scale-105">
-            <div className="w-20 h-20 rounded-full bg-purple-600 flex items-center justify-center mb-4 hover:bg-purple-500 transition-all duration-300">
-              <FaClock size={24} className="text-white" />
-            </div>
-            <h3 className="text-xl font-medium mb-2 text-white">Time-Consuming Editing Process</h3>
-            <p className="text-gray-400 text-center">Spending too much time editing instead of focusing on core tasks?</p>
-          </div>
-          <div className="border border-gray-700 border-opacity-50 rounded-lg p-6 flex flex-col items-center transition-all duration-300 ease-in-out transform hover:scale-105">
-            <div className="w-20 h-20 rounded-full bg-pink-600 flex items-center justify-center mb-4 hover:bg-pink-500 transition-all duration-300">
-              <FaStar size={24} className="text-white" />
-            </div>
-            <h3 className="text-xl font-medium mb-2 text-white">Inconsistent Quality and Reliability</h3>
-            <p className="text-gray-400 text-center">Uncertain about the quality and consistency of your edits?</p>
-          </div>
-          <div className="border border-gray-700 border-opacity-50 rounded-lg p-6 flex flex-col items-center transition-all duration-300 ease-in-out transform hover:scale-105">
-            <div className="w-20 h-20 rounded-full bg-red-600 flex items-center justify-center mb-4 hover:bg-red-500 transition-all duration-300">
-              <FaWrench size={24} className="text-white" />
-            </div>
-            <h3 className="text-xl font-medium mb-2 text-white">Limited Tools and Expertise</h3>
-            <p className="text-gray-400 text-center">Lacking the necessary tools and expertise for professional editing?</p>
-          </div>
-          <div className="border border-gray-700 border-opacity-50 rounded-lg p-6 flex flex-col items-center transition-all duration-300 ease-in-out transform hover:scale-105">
-            <div className="w-20 h-20 rounded-full bg-orange-900 flex items-center justify-center mb-4 hover:bg-orange-800 transition-all duration-300">
-              <FaCommentAlt size={24} className="text-white" />
-            </div>
-            <h3 className="text-xl font-medium mb-2 text-white">Scattered Social Media Management</h3>
-            <p className="text-gray-400 text-center">Wasting time managing edits across multiple social media platforms?</p>
-          </div>
-          <div className="border border-gray-700 border-opacity-50 rounded-lg p-6 flex flex-col items-center transition-all duration-300 ease-in-out transform hover:scale-105">
-            <div className="w-20 h-20 rounded-full bg-teal-600 flex items-center justify-center mb-4 hover:bg-teal-500 transition-all duration-300">
-              <FaDollarSign size={24} className="text-white" />
-            </div>
-            <h3 className="text-xl font-medium mb-2 text-white">Budget Constraints for Professional Editing</h3>
-            <p className="text-gray-400 text-center">Finding professional editing services too expensive?</p>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );
