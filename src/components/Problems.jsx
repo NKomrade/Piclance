@@ -6,38 +6,38 @@ const Problems = () => {
     {
       icon: FaEyeSlash,
       color: 'from-blue-500 to-indigo-500',
-      title: 'Lack of Access to Professional Editors',
-      description: 'Struggling to find skilled editors for your projects?'
+      title: 'Struggling to find skilled editors for your projects?',
+      description: 'Access to Professional Editors' 
     },
     {
       icon: FaClock,
       color: 'from-purple-500 to-pink-500',
-      title: 'Time-Consuming Editing Process',
-      description: 'Spending too much time editing instead of focusing on core tasks?'
+      title: 'Spending too much time editing instead of focusing on core tasks?',
+      description: 'Proficient Editing Process' 
     },
     {
       icon: FaStar,
       color: 'from-pink-500 to-rose-500',
-      title: 'Inconsistent Quality and Reliability',
-      description: 'Uncertain about the quality and consistency of your edits?'
+      title: 'Uncertain about the quality and consistency of your edits?',
+      description: 'Consistent Quality and Reliability'
     },
     {
       icon: FaWrench,
       color: 'from-orange-500 to-red-500',
-      title: 'Limited Tools and Expertise',
-      description: 'Lacking the necessary tools and expertise for professional editing?'
+      title: 'Lacking the necessary tools and expertise for professional editing?',
+      description: 'Best Tools and Expertise'
     },
     {
       icon: FaCommentAlt,
       color: 'from-amber-500 to-orange-500',
-      title: 'Scattered Social Media Management',
-      description: 'Wasting time managing edits across multiple social media platforms?'
+      title:  'Wasting time managing content across multiple platforms?',
+      description: 'Organized Social Media Management'
     },
     {
       icon: FaDollarSign,
       color: 'from-emerald-500 to-teal-500',
-      title: 'Budget Constraints for Professional Editing',
-      description: 'Finding professional editing services too expensive?'
+      title: 'Finding professional media services too expensive?',
+      description: 'Budget friendly media services.'
     }
   ];
 
@@ -45,7 +45,7 @@ const Problems = () => {
     <div className="min-h-screen bg-gradient-to-r from-zinc-800 to-transparent py-20 px-4">
       <h2 className="text-5xl font-bold text-center mb-16">
         <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text">
-          PROBLEMS
+          How We Help?
         </span>
       </h2>
       
@@ -60,10 +60,10 @@ const Problems = () => {
               </div>
               
               <div className="space-y-4">
-                <h3 className="text-xl font-semibold text-white group-hover:text-transparent group-hover:bg-gradient-to-r bg-clip-text transition-all duration-300 ease-out">
+                <h3 className="font-bold text-gray-400 group-hover:text-transparent group-hover:bg-gradient-to-r bg-clip-text transition-all duration-300 ease-out">
                   {problem.title}
                 </h3>
-                <p className="text-gray-400 group-hover:text-white transition-all duration-300">
+                <p className="text-xl text-white font-medium group-hover:text-white transition-all duration-300">
                   {problem.description}
                 </p>
               </div>

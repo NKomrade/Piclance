@@ -19,7 +19,7 @@ const HeroSection = () => {
         <div className="flex-1 flex flex-col justify-center p-8 md:p-16 lg:p-20 space-y-8 min-w-0">
           <div className="space-y-4">
             <span className="inline-block text-xs md:text-sm text-zinc-500 tracking-[0.2em] uppercase whitespace-nowrap">
-              Welcome to the future
+              Your media consultant
             </span>
             <h1 className="text-[40px] sm:text-[60px] md:text-[80px] lg:text-[100px] xl:text-[120px] font-black leading-none whitespace-nowrap">
               <span className="text-white">PIC</span>
@@ -31,7 +31,7 @@ const HeroSection = () => {
               <span className="text-xl sm:text-2xl md:text-xl lg:text-4xl font-bold text-white whitespace-nowrap">
                 Your Vision
               </span>
-              <span className="text-xl sm:text-2xl md:text-xl lg:text-4xl text-transparent bg-clip-text bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 tracking-[0.2em] md:tracking-[0.4em] whitespace-nowrap">
+              <span className="text-xl sm:text-2xl md:text-xl lg:text-4xl text-transparent bg-clip-text bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
                 Our Expertise
               </span>
             </div>
