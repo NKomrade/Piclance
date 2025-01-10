@@ -1,164 +1,121 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Link } from "react-router-dom";
+import { motion } from 'framer-motion';
 
-const Plans = () => {
-  const [isMonthly, setIsMonthly] = useState(true);
+const ServicesSection = () => {
+  // Sample service images - replace with your actual image paths
+  const serviceImages = [
+    { src: '/vid-edit.jpg', alt: 'Video Editing', category: 'Video Production' },
+    { src: '/web.jpg', alt: 'Web Development', category: 'Development' },
+    { src: '/graphics.jpg', alt: 'Graphic Design', category: 'Design' },
+    { src: '/wedding.jpg', alt: 'Wedding Cards', category: 'Invitation' }
+  ];
 
-  const plans = [
+  const howToSteps = [
     {
-      name: 'Starter',
-      price: isMonthly ? 10 : 100,
-      description: 'Perfect for getting started with our basic features.',
-      features: [
-        'Unlimited Customers',
-        'Analytical reports',
-        'Chat Support',
-        'Unlimited Emails',
-        'SEO Support'
-      ]
+      title: "Select Required Services",
+      description: "Select from our wide range of professional services tailored to your needs"
     },
     {
-      name: 'Intro',
-      price: isMonthly ? 19 : 190,
-      description: 'Great for growing teams ready to do more.',
-      features: [
-        'Unlimited Customers',
-        'Analytical reports',
-        'Chat Support',
-        'Unlimited Emails',
-        'SEO Support'
-      ]
+      title: "Fill Your Details",
+      description: "Tell us about your project requirements and creative goals"
     },
     {
-      name: 'Popular',
-      price: isMonthly ? 45 : 450,
-      description: 'Advanced features for scaling your business.',
-      features: [
-        'Unlimited Customers',
-        'Analytical reports',
-        'Chat Support',
-        'Unlimited Emails',
-        'SEO Support'
-      ],
-      highlight: true
+      title: "Converse With Our Executive",
+      description: "We'll match you with the perfect expert for your project"
     },
     {
-      name: 'Enterprise',
-      price: isMonthly ? 90 : 900,
-      description: 'Ultimate features for large-scale operations.',
-      features: [
-        'Unlimited Customers',
-        'Analytical reports',
-        'Chat Support',
-        'Unlimited Emails',
-        'SEO Support'
-      ]
+      title: "Enjoy Discounts",
+      description: "Monitor your project's development with real-time updates"
     }
   ];
 
   return (
-    <div className="min-h-screen bg-zinc-900 p-[50px]">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text animate-pulse">
-            Select Your Perfect Plan
-          </h2>
-          <p className="text-gray-400 text-lg">
-            Unlock your potential with our powerful solutions
-          </p>
-          
-          {/* Billing Toggle */}
-          <div className="flex items-center justify-center gap-4 mt-8">
-            <button
-              className={`px-6 py-3 rounded-full text-lg transition-all duration-300 ${
-                isMonthly 
-                  ? 'bg-gray-800 text-white shadow-[0_0_15px_rgba(255,255,255,0.3)]' 
-                  : 'bg-gray-700 text-gray-300'
-              }`}
-              onClick={() => setIsMonthly(true)}
-            >
-              Monthly
-            </button>
-            <button
-              className={`px-6 py-3 rounded-full text-lg transition-all duration-300 ${
-                !isMonthly 
-                  ? 'bg-gray-800 text-white shadow-[0_0_15px_rgba(255,255,255,0.3)]' 
-                  : 'bg-gray-700 text-gray-300'
-              }`}
-              onClick={() => setIsMonthly(false)}
-            >
-              Yearly
-            </button>
-          </div>
+    <div className="min-h-screen bg-zinc-900 py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Main Title */}
+        <div className="text-center mb-16">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-4xl md:text-5xl font-bold text-white mb-6"
+          >
+            Package Tailored Only For You
+          </motion.h2>
+          <motion.button
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Link to="/services">
+              <button className="group relative w-full sm:w-auto px-6 py-3 md:px-8 md:py-4 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-lg overflow-hidden">
+                <div className="absolute inset-0 bg-black/20 translate-y-full transition-transform group-hover:translate-y-0" />
+                <span className="relative text-white font-medium whitespace-nowrap">Select Services</span>
+              </button>
+            </Link>
+          </motion.button>
         </div>
 
-        {/* Pricing Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {plans.map((plan) => (
-            <div
-              key={plan.name}
-              className={`rounded-2xl p-8 transition-all duration-500 hover:transform hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] ${
-                plan.highlight
-                  ? 'bg-gray-800 text-white shadow-[0_0_20px_rgba(255,255,255,0.15)]'
-                  : 'bg-gray-800/50 text-gray-100'
-              }`}
-            >
-              <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
-                {plan.name}
-              </h3>
-              <div className="mb-6">
-                <span className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                  ${plan.price}
-                </span>
-                <span className="text-gray-400">/{isMonthly ? 'month' : 'year'}</span>
-              </div>
-              <p className="text-gray-400 mb-8">{plan.description}</p>
-              
-              <ul className="space-y-4 mb-8">
-                {plan.features.map((feature, index) => (
-                  <li key={index} className="flex items-center text-gray-300">
-                    <svg
-                      className="w-5 h-5 mr-3 text-blue-400"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-              
-              <button
-                className={`w-full py-4 rounded-xl font-bold text-lg transition-all duration-300 
-                  ${plan.highlight
-                    ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:shadow-[0_0_20px_rgba(59,130,246,0.5)]'
-                    : 'bg-gray-700 text-white hover:bg-gray-600'
-                  }
-                  transform hover:scale-105 hover:shadow-lg`}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          {/* Left Section - Service Images */}
+          <div className="grid grid-cols-2 gap-4">
+            {serviceImages.map((service, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="relative group"
               >
-                Get Started
-              </button>
-            </div>
-          ))}
-        </div>
-        
-        {/* Savings Note */}
-        {!isMonthly && (
-          <div className="text-center mt-8">
-            <p className="text-blue-400 font-medium text-lg animate-pulse">
-              Save up to 20% with yearly billing!
-            </p>
+                <div className="aspect-square rounded-xl overflow-hidden">
+                  <img 
+                    src={service.src} 
+                    alt={service.alt}
+                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="absolute bottom-4 left-4 text-white">
+                      <h3 className="font-semibold text-lg">{service.alt}</h3>
+                      <p className="text-sm text-gray-300">{service.category}</p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
-        )}
+
+          {/* Right Section - How To */}
+          <div className="space-y-8">
+            <motion.h3
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-3xl font-bold text-white mb-8"
+            >
+              How It Works
+            </motion.h3>
+            <div className="space-y-6">
+              {howToSteps.map((step, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="relative pl-12 border-l-2 border-purple-500 py-4"
+                >
+                  <div className="absolute left-[-9px] top-6 w-4 h-4 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500" />
+                  <h4 className="text-xl font-semibold text-white mb-2">{step.title}</h4>
+                  <p className="text-zinc-400">{step.description}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
-export default Plans;
+export default ServicesSection;

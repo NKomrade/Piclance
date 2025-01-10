@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronDown, Brain, Rocket, Zap, Crown, Target } from 'lucide-react';
+import { ChevronDown, Users, Rocket, Zap, Clock, IndianRupee } from 'lucide-react';
 
 const FAQs = () => {
   const [openIndex, setOpenIndex] = useState(null);
@@ -7,7 +7,7 @@ const FAQs = () => {
 
   const faqData = [
     {
-      icon: <Brain className="w-6 h-6" />,
+      icon: <Users className="w-6 h-6" />,
       question: "Who can benefit from Piclance’s services?",
       answer: "Our services are tailored for individuals, content creators, businesses, and anyone seeking professional media solutions.",
       color: "from-purple-500 to-pink-500"
@@ -25,13 +25,13 @@ const FAQs = () => {
       color: "from-blue-500 to-cyan-500"
     },
     {
-      icon: <Crown className="w-6 h-6" />,
+      icon: <Clock className="w-6 h-6" />,
       question: "What is the typical turnaround time for a project?",
       answer: "Turnaround times depend on the complexity of the project. We ensure timely delivery while maintaining high quality.",
       color: "from-yellow-500 to-green-500"
     },
     {
-      icon: <Target className="w-6 h-6" />,
+      icon: <IndianRupee className="w-6 h-6" />,
       question: "How are your services priced?",
       answer: "We offer top-quality services at affordable prices.",
       color: "from-emerald-500 to-teal-500"
