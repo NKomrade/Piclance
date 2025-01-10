@@ -3,9 +3,10 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import HeroSection from '../components/HeroSection';
 import ServicesSection from '../components/Services';
-import TestimonialsSection from '../components/Testimonials';
 import Problems from '../components/Problems';
-import { Parallax } from 'react-parallax'; // Import the Parallax component
+import TestimonialsSection from '../components/Testimonials';
+import FAQs from '../components/FAQs';
+import Plans from '../components/plans';
 
 const Homepage = () => {
   return (
@@ -24,21 +25,14 @@ const Homepage = () => {
         {/* Problems Section with Parallax */}
         <Problems />
 
-        {/* Services Section with Parallax */}
-        <Parallax
-          bgImage="path-to-your-image.jpg" // Optional: Add a background image
-          strength={150}
-        >
-          <ServicesSection />
-        </Parallax>
+        <ServicesSection />
 
         {/* Testimonials Section with Parallax */}
-        <Parallax
-          bgImage="path-to-your-image.jpg" // Optional: Add a background image
-          strength={100}
-        >
-          <TestimonialsSection />
-        </Parallax>
+        <TestimonialsSection />
+
+        <Plans/>
+
+        <FAQs/>
 
         {/* Footer */}
         <Footer />

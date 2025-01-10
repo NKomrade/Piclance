@@ -25,7 +25,7 @@ const GlassyCards = () => {
   ];
 
   return (
-    <div className="flex flex-wrap justify-center space-x-6 p-6 overflow-x-auto">
+    <div className="flex flex-nowrap justify-center space-x-6 p-6 overflow-x-auto">
       {cards.map((card, index) => (
         <div
           key={index}

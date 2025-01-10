@@ -14,8 +14,8 @@ const Navbar = () => {
         <div className="text-2xl font-bold flex items-center space-x-2">
           <Link to="/" onClick={() => setMenuOpen(false)}>
             <div className="flex items-center gap-2"> 
-              <img src="/logo.png" alt="Piclance Logo" className="w-8 h-8" />
-              <img src="/PiclanceText.png" alt="Piclance" className="w-15 h-10 filter invert"/>
+              <img src="/logo.png" alt="Piclance Logo" className="w-6 h-6" />
+              <img src="/PiclanceText.png" alt="Piclance" className="w-15 h-6 filter invert"/>
             </div>
           </Link>
         </div>
