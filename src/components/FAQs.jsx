@@ -8,32 +8,32 @@ const FAQs = () => {
   const faqData = [
     {
       icon: <Brain className="w-6 h-6" />,
-      question: "Can AI really become conscious?",
-      answer: "This is one of the most fascinating debates in AI ethics. While current AI systems can process information and learn patterns, consciousness involves subjective experiences and self-awareness. Some theorists argue that consciousness emerges from complex information processing, while others believe there's a fundamental gap between computation and consciousness that AI can't bridge.",
+      question: "Who can benefit from Piclance’s services?",
+      answer: "Our services are tailored for individuals, content creators, businesses, and anyone seeking professional media solutions.",
       color: "from-purple-500 to-pink-500"
     },
     {
       icon: <Rocket className="w-6 h-6" />,
-      question: "What happens when we colonize Mars?",
-      answer: "Mars colonization raises incredible questions about human adaptation. We'll need to solve challenges like radiation protection, food production in Martian soil, and psychological effects of isolation. The first colonists will essentially be creating a new branch of human civilization, potentially developing distinct cultural and even physiological characteristics over time.",
+      question: " Do you provide customized solutions?",
+      answer: "Yes, all our services are fully customized to align with your specific needs and vision.",
       color: "from-red-500 to-orange-500"
     },
     {
       icon: <Zap className="w-6 h-6" />,
-      question: "Could we harness quantum tunneling for teleportation?",
-      answer: "While quantum tunneling is a fascinating phenomenon where particles pass through barriers they classically shouldn't be able to, using it for human teleportation faces enormous challenges. The quantum states of trillions of atoms would need to be perfectly measured and reconstructed. However, scientists are exploring quantum teleportation for information transfer in quantum computers.",
+      question: "What sets Piclance apart from others?",
+      answer: "Our focus on creativity, attention to detail, and client satisfaction sets us apart. We work collaboratively to bring your ideas to life.",
       color: "from-blue-500 to-cyan-500"
     },
     {
       icon: <Crown className="w-6 h-6" />,
-      question: "What if we could upload our consciousness?",
-      answer: "Mind uploading is a provocative concept that raises questions about identity and consciousness. Even if we could create a perfect digital copy of someone's neural patterns, would that copy be 'you'? It challenges our understanding of consciousness continuity and what makes us uniquely ourselves.",
+      question: "What is the typical turnaround time for a project?",
+      answer: "Turnaround times depend on the complexity of the project. We ensure timely delivery while maintaining high quality.",
       color: "from-yellow-500 to-green-500"
     },
     {
       icon: <Target className="w-6 h-6" />,
-      question: "Could we achieve biological immortality?",
-      answer: "Recent advances in genetic engineering and understanding of aging mechanisms suggest biological immortality might be theoretically possible. Scientists are studying organisms like the immortal jellyfish and investigating telomere preservation. However, the implications for society, resources, and human psychology would be profound.",
+      question: "How are your services priced?",
+      answer: "We offer top-quality services at affordable prices.",
       color: "from-emerald-500 to-teal-500"
     }
   ];
