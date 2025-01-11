@@ -27,10 +27,10 @@ const Homepage = () => {
 
         <ServicesSection />
 
+        <Plans/>
+
         {/* Testimonials Section with Parallax */}
         <TestimonialsSection />
-
-        <Plans/>
 
         <FAQs/>
 
