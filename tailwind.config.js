@@ -18,7 +18,7 @@ module.exports = {
       animation: {
         float: 'float 1.5s ease-in-out forwards',
         'fade-in': 'fadeIn 1s ease-in forwards',
-        marquee: 'marquee 10s linear infinite',
+        marquee: 'marquee 30s linear infinite',
       },
       keyframes: {
         float: {
@@ -30,8 +30,8 @@ module.exports = {
           '100%': { opacity: '1' },
         },
         marquee: {
-          '0%': { transform: 'translateX(100%)' },
-          '100%': { transform: 'translateX(-100%)' },
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-1000%)' },
         },
       },
     },

@@ -41,7 +41,11 @@ const ServicesSection = () => {
             transition={{ duration: 0.6 }}
             className="text-4xl md:text-5xl font-bold text-white mb-6"
           >
-            Package Tailored Only For You
+            <h2 className="text-5xl font-extrabold text-center mb-16">
+              <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text">
+                Select the services you want
+              </span>
+            </h2>
           </motion.h2>
           <motion.button
             initial={{ opacity: 0, scale: 0.95 }}

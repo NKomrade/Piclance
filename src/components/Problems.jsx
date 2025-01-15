@@ -43,9 +43,9 @@ const Problems = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-zinc-800 to-transparent py-20 px-4">
-      <h2 className="text-5xl font-bold text-center mb-16">
+      <h2 className="text-5xl font-extrabold text-center mb-16">
         <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text">
-          How We Help?
+          How we help?
         </span>
       </h2>
       

@@ -8,8 +8,7 @@ const Navbar = () => {
 
   return (
     <nav className="bg-black bg-opacity-10 backdrop-blur-md text-white py-4 fixed w-full top-0 z-20 shadow-lg rounded-lg">
-      <div className="container mx-auto flex justify-between items-center px-4">
-        
+      <div className="mx-auto flex justify-between items-center px-4 max-w-screen-xl">
         {/* Brand Name on the Left */}
         <div className="text-2xl font-bold flex items-center space-x-2">
           <Link to="/" onClick={() => setMenuOpen(false)}>

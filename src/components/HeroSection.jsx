@@ -10,7 +10,6 @@ const HeroSection = () => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
     }, 2000);
     
-    // Trigger animations after component mounts
     setIsLoaded(true);
     
     return () => clearInterval(interval);
@@ -18,17 +17,16 @@ const HeroSection = () => {
 
   return (
     <div className="relative min-h-screen overflow-hidden">
-      <div className="absolute inset-0 flex flex-nowrap">
-        
+      <div className="absolute inset-0 flex flex-col md:flex-row">
         {/* Left Section */}
-        <div className="flex-1 flex flex-col justify-center p-8 md:p-16 lg:p-20 space-y-8 min-w-0">
+        <div className="w-full md:flex-1 flex flex-col justify-center p-8 md:p-16 lg:p-20 space-y-8">
           <div className="space-y-4">
             <span className={`inline-block text-xs md:text-sm text-zinc-500 tracking-[0.2em] uppercase whitespace-nowrap transform transition-all duration-700 ${
               isLoaded ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
             }`}>
               Your media consultant
             </span>
-            <h1 className={`text-[40px] sm:text-[60px] md:text-[80px] lg:text-[100px] xl:text-[120px] font-black leading-none whitespace-nowrap transform transition-all duration-700 delay-300 ${
+            <h1 className={`text-[70px] sm:text-[60px] md:text-[80px] lg:text-[100px] xl:text-[120px] font-black leading-none whitespace-nowrap transform transition-all duration-700 delay-300 ${
               isLoaded ? "translate-x-0 opacity-100" : "-translate-x-8 opacity-0"
             }`}>
               <span className="text-white">PIC</span>
@@ -65,8 +63,8 @@ const HeroSection = () => {
           </div>
         </div>
 
-        {/* Right Section */}
-        <div className={`flex-1 flex justify-center items-center p-8 md:p-16 lg:p-20 min-w-0 transform transition-all duration-1000 delay-500 ${
+        {/* Right Section - Carousel */}
+        <div className={`w-full md:flex-1 flex justify-center items-center p-8 md:p-16 lg:p-20 transform transition-all duration-1000 delay-500 ${
           isLoaded ? "translate-x-0 opacity-100" : "translate-x-8 opacity-0"
         }`}>
           <div className="relative w-full max-w-xl aspect-[4/3] rounded-2xl overflow-hidden border-2 border-white">

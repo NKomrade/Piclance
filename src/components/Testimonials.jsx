@@ -26,8 +26,10 @@ const TestimonialsSection = () => {
   return (
     <section>
       <div className="container mx-auto mt-10 mb-10">
-        <h2 className="text-white text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-6 md:mb-8">
-          What Our Clients Say
+        <h2 className="text-5xl font-extrabold text-center ">
+          <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text">
+            What our clients say?
+          </span>
         </h2>
         <AnimatedTestimonials testimonials={testimonials} autoplay={false} />
       </div>
