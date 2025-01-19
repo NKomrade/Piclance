@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -16,10 +17,10 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen overflow-hidden">
+    <div className="relative h-[850px] md:h-screen overflow-hidden">
       <div className="absolute inset-0 flex flex-col md:flex-row">
         {/* Left Section */}
-        <div className="w-full md:flex-1 flex flex-col justify-center p-8 md:p-16 lg:p-20 space-y-8">
+        <div className="w-full mt-[60px] md:mt-0 md:flex-1 flex flex-col justify-center p-8 md:p-16 lg:p-20 space-y-8">
           <div className="space-y-4">
             <span className={`inline-block text-xs md:text-sm text-zinc-500 tracking-[0.2em] uppercase whitespace-nowrap transform transition-all duration-700 ${
               isLoaded ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
@@ -53,13 +54,17 @@ const HeroSection = () => {
           <div className={`flex flex-wrap gap-4 transform transition-all duration-700 delay-1000 ${
             isLoaded ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
           }`}>
-            <button className="group relative w-full sm:w-auto px-6 py-3 md:px-8 md:py-4 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-lg overflow-hidden">
-              <div className="absolute inset-0 bg-black/20 translate-y-full transition-transform group-hover:translate-y-0" />
-              <span className="relative text-white font-medium whitespace-nowrap">Get Started</span>
-            </button>
-            <button className="w-full sm:w-auto px-6 py-3 md:px-8 md:py-4 border border-zinc-700 text-zinc-300 rounded-lg hover:bg-zinc-800 transition-colors whitespace-nowrap">
-              Learn More
-            </button>
+            <Link to="/form">
+              <button className="group relative md:w-full w-[350px] px-6 py-3 md:px-8 md:py-4 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-lg overflow-hidden">
+                <div className="absolute inset-0 bg-black/20 translate-y-full transition-transform group-hover:translate-y-0" />
+                <span className="relative text-white font-medium whitespace-nowrap">Get Started</span>
+              </button>
+            </Link>
+            <Link to="/form">
+              <button className="md:w-full w-[350px] sm:w-auto px-6 py-3 md:px-8 md:py-4 border border-zinc-700 text-zinc-300 rounded-lg hover:bg-zinc-800 transition-colors whitespace-nowrap">
+                Learn More
+              </button>
+            </Link>
           </div>
         </div>
 

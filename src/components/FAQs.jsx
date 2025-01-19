@@ -26,7 +26,7 @@ const FAQs = () => {
     },
     {
       icon: <Clock className="w-6 h-6" />,
-      question: "What is the typical turnaround time for a project?",
+      question: "Typical turnaround time for a project?",
       answer: "Turnaround times depend on the complexity of the project. We ensure timely delivery while maintaining high quality.",
       color: "from-yellow-500 to-green-500"
     },
@@ -70,7 +70,7 @@ const FAQs = () => {
                 `}>
                   {item.icon}
                 </div>
-                <h3 className="flex-grow text-xl font-semibold text-white">{item.question}</h3>
+                <h3 className="flex-grow md:text-xl text-sm font-semibold text-white">{item.question}</h3>
                 <ChevronDown 
                   className={`
                     w-6 h-6 transition-transform duration-300 text-white
@@ -84,7 +84,7 @@ const FAQs = () => {
               overflow-hidden transition-all duration-300
               ${openIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}
             `}>
-              <p className="px-6 pb-6 text-gray-400 leading-relaxed">
+              <p className="pb-6 px-4 text-gray-400">
                 {item.answer}
               </p>
             </div>

@@ -1,53 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
-import { Video, Image, Globe, ChevronRight } from 'lucide-react';
+import { Video, Image, Globe, ChevronRight, ChevronLeft } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const SelectServices = () => {
   const [selectedServices, setSelectedServices] = useState([]);
 
   const services = {
     videoEditing: [
-      { id: 'short-form', title: 'Short Form', description: 'Reels, TikTok, and Shorts', icon: '/api/placeholder/300/200' },
-      { id: 'long-form', title: 'Long Form', description: 'YouTube videos and documentaries', icon: '/api/placeholder/300/200' },
-      { id: 'social-media', title: 'Social Media', description: 'Instagram, Facebook, and LinkedIn', icon: '/api/placeholder/300/200' },
-      { id: 'gaming', title: 'Gaming Content', description: 'Streaming and gameplay highlights', icon: '/api/placeholder/300/200' }
+      { id: 'short-form', title: 'Short Form Video', description: 'Bite-sized stories, endless impact.', icon: '/reels.jpg' },
+      { id: 'long-form', title: 'Long Form Video', description: 'Elevate your stories.', icon: '/vid-edit.jpg' },
+      { id: 'social-media', title: 'Social Media Management', description: 'Maximize your reach.', icon: '/image-5.jpg' },
+      { id: 'gaming', title: 'Gaming Content', description: 'Bringing your gameplay to life.', icon: '/gaming.jpg' }
     ],
     staticProjects: [
-      { id: 'logos', title: 'Logos', description: 'Custom logo design and branding', icon: '/api/placeholder/300/200' },
-      { id: 'thumbnails', title: 'Thumbnails', description: 'Eye-catching video thumbnails', icon: '/api/placeholder/300/200' },
-      { id: 'photo-edits', title: 'Photo Edits', description: 'Professional photo retouching', icon: '/api/placeholder/300/200' },
-      { id: 'wedding', title: 'Wedding Innovation', description: 'Creative wedding photography', icon: '/api/placeholder/300/200' },
-      { id: 'brand-design', title: 'Brand Design', description: 'Complete brand identity packages', icon: '/api/placeholder/300/200' },
-      { id: 'vectors', title: 'Vectors', description: 'Scalable vector graphics', icon: '/api/placeholder/300/200' }
+      { id: 'wedding-shoots', title: 'Wedding & Prewedding Shoots', description: 'Love stories told beautifully.', icon: '/prewedding.jpg' },
+      { id: 'logos', title: 'Logos', description: 'Brand identity at a glance.', icon: '/logo.jpg' },
+      { id: 'thumbnails', title: 'Thumbnails', description: 'First impression that click.', icon: '/image-2.jpg' },
+      { id: 'photo-edits', title: 'Photo Editing', description: 'Perfection, pixel by pixel.', icon: '/photo.jpg' },
+      { id: 'wedding-invite', title: 'Wedding Invitation', description: 'Elegant invites, lasting impact.', icon: '/wedding.jpg' },
+      { id: 'brand-design', title: 'Brand Design', description: 'Stand out in the crowd with style.', icon: '/image-11.jpg' },
+      { id: 'vectors', title: 'Vectors', description: 'Crisp, clean, and scalable artistry.', icon: '/sfxgfx.jpg' }
     ],
     websites: [
-      { id: 'web-dev', title: 'Web Development', description: 'Full-stack web development', icon: '/api/placeholder/300/200' },
-      { id: 'web-design', title: 'Web Design', description: 'UI/UX and visual design', icon: '/api/placeholder/300/200' }
+      { id: 'web-design-dev', title: 'Web Design & Web Development', description: 'Build stunning websites', icon: '/web.jpg' }
     ]
   };
 
   const toggleService = (id) => {
-    setSelectedServices(prev => 
-      prev.includes(id) 
+    setSelectedServices(prev =>
+      prev.includes(id)
         ? prev.filter(item => item !== id)
         : [...prev, id]
     );
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    setSelectedServices([]);
+  }, []);
+
   const ServiceCard = ({ service, selected, onToggle }) => (
     <div 
       onClick={() => onToggle(service.id)}
       className={`
-        relative cursor-pointer group overflow-hidden
+        relative cursor-pointer overflow-hidden z-10
         rounded-xl border-2 transition-all duration-300
-        ${selected ? 'border-purple-500 bg-purple-500/10' : 'border-zinc-800 hover:border-purple-500/50'}
+        ${selected ? 'border-purple-500 bg-purple-500/10 z-20' : 'border-zinc-800 md:hover:border-purple-500/50'}
       `}
     >
-      <div className="aspect-video relative overflow-hidden">
+      <div className="aspect-video relative overflow-hidden group">
         <img 
           src={service.icon} 
           alt={service.title}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          className="w-full h-full object-cover transition-transform duration-500 md:group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
       </div>
@@ -56,7 +62,7 @@ const SelectServices = () => {
         <p className="text-sm text-zinc-400">{service.description}</p>
       </div>
       <div className={`
-        absolute top-3 right-3 w-6 h-6 rounded-full border-2
+        absolute top-3 right-3 w-6 h-6 rounded-full border-2 z-30
         transition-all duration-300 flex items-center justify-center
         ${selected ? 'border-purple-500 bg-purple-500' : 'border-white'}
       `}>
@@ -66,77 +72,86 @@ const SelectServices = () => {
   );
 
   return (
-    <div className="bg-zinc-900 w-full mx-auto p-8 space-y-12">
+    <div className="bg-zinc-900 min-h-screen pt-20">
       <Navbar />
-      {/* Video Editing Section */}
-      <section className="space-y-6">
-        <div className="flex items-center gap-2">
-          <Video className="w-6 h-6 text-purple-500" />
-          <h2 className="text-2xl font-bold text-white">Video Editing</h2>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {services.videoEditing.map(service => (
-            <ServiceCard 
-              key={service.id}
-              service={service}
-              selected={selectedServices.includes(service.id)}
-              onToggle={toggleService}
-            />
-          ))}
-        </div>
-      </section>
 
-      {/* Static Projects Section */}
-      <section className="space-y-6">
-        <div className="flex items-center gap-2">
-          <Image className="w-6 h-6 text-purple-500" />
-          <h2 className="text-2xl font-bold text-white">Static Projects</h2>
+      <div className="max-w-7xl mx-auto">
+        <div className="flex justify-between items-center py-4 px-8">
+          <Link
+            to="/"
+            className="flex items-center gap-2 px-6 py-2 rounded-lg font-medium bg-zinc-800 text-white hover:bg-zinc-700 transition-colors"
+          >
+            <ChevronLeft className="w-4 h-4" />
+            Back
+          </Link>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.staticProjects.map(service => (
-            <ServiceCard 
-              key={service.id}
-              service={service}
-              selected={selectedServices.includes(service.id)}
-              onToggle={toggleService}
-            />
-          ))}
-        </div>
-      </section>
 
-      {/* Websites Section */}
-      <section className="space-y-6">
-        <div className="flex items-center gap-2">
-          <Globe className="w-6 h-6 text-purple-500" />
-          <h2 className="text-2xl font-bold text-white">Websites</h2>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {services.websites.map(service => (
-            <ServiceCard 
-              key={service.id}
-              service={service}
-              selected={selectedServices.includes(service.id)}
-              onToggle={toggleService}
-            />
-          ))}
-        </div>
-      </section>
+        <section className="space-y-6 p-8">
+          <div className="flex items-center gap-2">
+            <Video className="w-6 h-6 text-purple-500" />
+            <h2 className="text-2xl font-bold text-white">Video Editing</h2>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+            {services.videoEditing.map(service => (
+              <ServiceCard 
+                key={service.id}
+                service={service}
+                selected={selectedServices.includes(service.id)}
+                onToggle={toggleService}
+              />
+            ))}
+          </div>
+        </section>
 
-      {/* Next Button */}
-      <div className="flex justify-end pt-8">
-        <button
-          disabled={selectedServices.length === 0}
-          className={`
-            flex items-center gap-2 px-8 py-3 rounded-lg font-medium
-            transition-all duration-300
-            ${selectedServices.length > 0 
-              ? 'bg-purple-500 hover:bg-purple-600 text-white'
-              : 'bg-zinc-800 text-zinc-500 cursor-not-allowed'}
-          `}
-        >
-          Next
-          <ChevronRight className="w-4 h-4" />
-        </button>
+        <section className="space-y-6 p-8">
+          <div className="flex items-center gap-2">
+            <Image className="w-6 h-6 text-purple-500" />
+            <h2 className="text-2xl font-bold text-white">Static Projects</h2>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+            {services.staticProjects.map(service => (
+              <ServiceCard 
+                key={service.id}
+                service={service}
+                selected={selectedServices.includes(service.id)}
+                onToggle={toggleService}
+              />
+            ))}
+          </div>
+        </section>
+
+        <section className="space-y-6 p-8">
+          <div className="flex items-center gap-2">
+            <Globe className="w-6 h-6 text-purple-500" />
+            <h2 className="text-2xl font-bold text-white">Websites</h2>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+            {services.websites.map(service => (
+              <ServiceCard 
+                key={service.id}
+                service={service}
+                selected={selectedServices.includes(service.id)}
+                onToggle={toggleService}
+              />
+            ))}
+          </div>
+        </section>
+        
+        <div className="flex justify-end p-8">
+          <button
+            disabled={selectedServices.length === 0}
+            className={`
+              flex items-center gap-2 px-8 py-3 rounded-lg font-medium
+              transition-all duration-300
+              ${selectedServices.length > 0 
+                ? 'bg-purple-500 hover:bg-purple-600 text-white'
+                : 'bg-zinc-800 text-zinc-500 cursor-not-allowed'}
+            `}
+          >
+            Next
+            <ChevronRight className="w-4 h-4" />
+          </button>
+        </div>
       </div>
     </div>
   );
