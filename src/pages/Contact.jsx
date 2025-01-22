@@ -1,50 +1,112 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 const ContactPage = () => {
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    message: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const webhookUrl = import.meta.env.VITE_FEEDBACK_WEBHOOK_URL;
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    const { fullName, email, message } = formData;
+    if (!fullName || !email || !message) {
+      alert("Please fill out all fields.");
+      setIsSubmitting(false);
+      return;
+    }
+
+    const payload = {
+      content: `**New Contact Form Submission**\n\n**Name:** ${fullName}\n**Email:** ${email}\n**Message:** ${message}`,
+    };
+
+    try {
+      const response = await fetch(webhookUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (response.ok) {
+        alert("Message sent successfully!");
+        setFormData({ fullName: "", email: "", message: "" });
+      } else {
+        alert("Failed to send message. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error sending message:", error);
+      alert("An error occurred. Please try again.");
+    }
+
+    setIsSubmitting(false);
+  };
+
   return (
-    <div className="min-h-screen bg-cover bg-center relative" style={{ backgroundImage: "url('/main.jpg')", backgroundAttachment: 'fixed' }}>
+    <div className="min-h-screen bg-cover bg-zinc-900 bg-center relative">
       {/* Navbar */}
       <Navbar />
 
       {/* Main Content */}
       <div className="flex items-center justify-center min-h-screen pt-20 pb-20">
-        <div className="absolute inset-0 bg-black opacity-70"></div>
+        <div className="absolute inset-0 bg-zinc-900 opacity-70"></div>
 
         {/* Contact Form Section */}
-        <div className="relative z-10 p-8 bg-black bg-opacity-60 rounded-lg max-w-3xl w-full text-white shadow-lg text-center">
+        <div className="relative z-10 p-8 md:bg-black bg-opacity-60 rounded-lg max-w-3xl w-full text-white shadow-lg text-center">
           <h2 className="text-3xl md:text-4xl font-extrabold mb-6">Contact Us</h2>
-          <p className="text-base md:text-lg mb-4">
-            We'd love to hear from you! Whether you have a question or need assistance with our services, reach out to us.
-          </p>
-          <form className="space-y-4 text-left">
+          <form className="space-y-4 text-left" onSubmit={handleSubmit}>
             <div>
               <label className="block text-sm font-semibold mb-2">Full Name</label>
               <input
                 type="text"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleChange}
                 className="w-full px-4 py-2 rounded-md bg-black bg-opacity-80 text-gray-200 border border-gray-700 focus:outline-none focus:border-neutral-300 transition duration-300"
+                placeholder="Enter your name"
               />
             </div>
             <div>
               <label className="block text-sm font-semibold mb-2">Email</label>
               <input
                 type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
                 className="w-full px-4 py-2 rounded-md bg-black bg-opacity-80 text-gray-200 border border-gray-700 focus:outline-none focus:border-neutral-300 transition duration-300"
+                placeholder="Enter your mail ID"
               />
             </div>
             <div>
               <label className="block text-sm font-semibold mb-2">Message</label>
               <textarea
                 rows="4"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
                 className="w-full px-4 py-2 rounded-md bg-black bg-opacity-80 text-gray-200 border border-gray-700 focus:outline-none focus:border-neutral-300 transition duration-300"
+                placeholder="Write your message here..."
               ></textarea>
             </div>
             <button
               type="submit"
               className="w-full py-3 rounded-md bg-white hover:bg-black hover:text-white transition duration-300 font-bold text-black hover:shadow-lg transform hover:scale-105"
+              disabled={isSubmitting}
             >
-              Send Message
+              {isSubmitting ? "Sending..." : "Send Message"}
             </button>
           </form>
         </div>

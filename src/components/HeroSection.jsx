@@ -54,16 +54,18 @@ const HeroSection = () => {
           <div className={`flex flex-wrap gap-4 transform transition-all duration-700 delay-1000 ${
             isLoaded ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
           }`}>
-            <Link to="/form">
-              <button className="group relative md:w-full w-[350px] px-6 py-3 md:px-8 md:py-4 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-lg overflow-hidden">
-                <div className="absolute inset-0 bg-black/20 translate-y-full transition-transform group-hover:translate-y-0" />
-                <span className="relative text-white font-medium whitespace-nowrap">Get Started</span>
-              </button>
+            <Link
+              to="/form"
+              className="group relative md:w-1/4 w-[350px] px-6 py-3 md:px-8 md:py-4 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-lg overflow-hidden flex items-center justify-center"
+            >
+              <div className="absolute inset-0 bg-black/20 translate-y-full transition-transform group-hover:translate-y-0" />
+              <span className="relative text-white font-medium whitespace-nowrap">Get Started</span>
             </Link>
-            <Link to="/form">
-              <button className="md:w-full w-[350px] sm:w-auto px-6 py-3 md:px-8 md:py-4 border border-zinc-700 text-zinc-300 rounded-lg hover:bg-zinc-800 transition-colors whitespace-nowrap">
-                Learn More
-              </button>
+            <Link
+              to="/form"
+              className="md:w-1/4 w-[350px] px-6 py-3 md:px-8 md:py-4 border border-zinc-700 text-zinc-300 rounded-lg hover:bg-zinc-800 transition-colors whitespace-nowrap flex items-center justify-center"
+            >
+              Learn More
             </Link>
           </div>
         </div>

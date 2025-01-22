@@ -1,14 +1,14 @@
 import React from "react";
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import { MdHome, MdEmail, MdPhone } from "react-icons/md";
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
     <footer className="bg-gradient-to-b from-neutral-900 to-black text-gray-300 py-12 w-full">
       <div className="container mx-auto px-6 lg:px-10">
-        
         {/* Footer Top Section */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
-          
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center md:text-left">
           {/* About Us Section */}
           <div>
             <h2 className="text-2xl font-bold text-white mb-4">PICLANCE</h2>
@@ -17,17 +17,17 @@ const Footer = () => {
             </p>
             <p className="text-sm">&copy; {new Date().getFullYear()} PicLance. All rights reserved.</p>
           </div>
-          
+
           {/* Quick Links Section */}
           <div>
             <h3 className="text-xl font-semibold text-white mb-4">Quick Links</h3>
             <div className="flex flex-col space-y-2">
-              <a href="#home" className="hover:text-white">Home</a>
-              <a href="#about" className="hover:text-white">About Us</a>
-              <a href="#contact" className="hover:text-white">Contact</a>
+              <Link  to="/" className="hover:text-white">Home</Link>
+              <Link to="/aboutus" className="hover:text-white">About</Link>
+              <Link to="/contact" className="hover:text-white">Contact</Link>
             </div>
           </div>
-          
+
           {/* Popular Services Section */}
           <div>
             <h3 className="text-xl font-semibold text-white mb-4">Popular Services</h3>
@@ -35,6 +35,29 @@ const Footer = () => {
               <a href="#video-editing" className="hover:text-white">Video Editing</a>
               <a href="#photo-editing" className="hover:text-white">Photo Editing</a>
               <a href="#social-media" className="hover:text-white">Social Media Management</a>
+            </div>
+          </div>
+
+          {/* Contact Section */}
+          <div>
+            <h3 className="text-xl font-semibold text-white mb-4">Contact</h3>
+            <div className="flex flex-col space-y-2 items-center md:items-start">
+              <div className="flex items-center space-x-2">
+                <MdHome size={20} className="text-gray-400" />
+                <span>Ghaziabad, Uttar Pradesh</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <MdEmail size={20} className="text-gray-400" />
+                <a href="mailto:support@piclance.com" className="hover:text-white">
+                  support@piclance.com
+                </a>
+              </div>
+              <div className="flex items-center space-x-2">
+                <MdPhone size={20} className="text-gray-400" />
+                <a href="tel:+919999439604" className="hover:text-white">
+                  +91 99994 39604
+                </a>
+              </div>
             </div>
           </div>
         </div>

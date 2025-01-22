@@ -18,7 +18,7 @@ module.exports = {
       animation: {
         float: 'float 1.5s ease-in-out forwards',
         'fade-in': 'fadeIn 1s ease-in forwards',
-        marquee: 'marquee 30s linear infinite',
+        marquee: 'marquee 40s linear infinite',
       },
       keyframes: {
         float: {
@@ -36,7 +36,7 @@ module.exports = {
       },
     },
   },
-  plugins: [addVariablesForColors],
+  plugins: [addVariablesForColors, require("tailwind-scrollbar-hide"),],
 };
 
 function addVariablesForColors({ addBase, theme }) {

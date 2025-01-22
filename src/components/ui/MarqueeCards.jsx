@@ -11,7 +11,7 @@ const GlassyCards = () => {
     { image: '/image-2.jpg', heading: 'Thumbnails', text: 'First impression that click.' },
     { image: '/photo.jpg', heading: 'Photo Editing', text: 'Perfection, pixel by pixel.' },
     { image: '/wedding.jpg', heading: 'Wedding Invitation', text: 'Elegant invites, lasting impact.' },
-    { image: '/image-11.jpg', heading: 'Brand Design', text: ' Stand out in the crowd with style.' },
+    { image: '/brand1.jpg', heading: 'Brand Design', text: ' Stand out in the crowd with style.' },
     { image: '/sfxgfx.jpg', heading: 'Vectors', text: 'Crisp, clean, and scalable artistry.' },
     { image: '/web.jpg', heading: 'Web Design & Web Development', text: 'Build stunning websites' },
   ];
@@ -27,7 +27,7 @@ const GlassyCards = () => {
           backgroundRepeat: 'no-repeat'
         }} 
       />
-      <div className="absolute inset-0 bg-black bg-opacity-50 overflow-hidden flex flex-col items-start justify-end p-4 transition-opacity duration-300 hover:bg-opacity-40">
+      <div className="absolute inset-0 bg-black bg-opacity-50 overflow-hidden flex-col items-start justify-end p-4 transition-opacity duration-300 hover:bg-opacity-40">
         <h3 className="text-xs md:text-sm text-white pl-2 mb-1 md:mb-2">{card.heading}</h3>
         <p className="text-xl md:text-[32px] font-semibold pl-2 text-gray-200 leading-tight">{card.text}</p>
       </div>

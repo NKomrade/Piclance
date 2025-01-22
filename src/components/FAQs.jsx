@@ -39,8 +39,8 @@ const FAQs = () => {
   ];
 
   return (
-    <div className="w-full max-w-3xl mx-auto p-[50px] space-y-6">
-      <h2 className="text-5xl font-bold text-center mb-16">
+    <div className="w-full max-w-3xl mx-auto pt-[50px] md:p-[50px] space-y-6">
+      <h2 className="text-5xl font-bold text-center">
         <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text">
           FAQs
         </span>

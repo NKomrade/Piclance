@@ -31,7 +31,7 @@ const ServicesSection = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-zinc-900 py-20">
+    <div className="min-h-screen bg-gradient-to-r from-zinc-800 to-transparent py-20 px-4">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Title */}
         <div className="text-center mb-16">
@@ -41,11 +41,9 @@ const ServicesSection = () => {
             transition={{ duration: 0.6 }}
             className="text-4xl md:text-5xl font-bold text-white mb-6"
           >
-            <h2 className="text-5xl font-extrabold text-center mb-16">
-              <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text">
-                Select the services you want
-              </span>
-            </h2>
+            <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text">
+              Select the services you want
+            </span>
           </motion.h2>
           <motion.button
             initial={{ opacity: 0, scale: 0.95 }}
@@ -53,11 +51,12 @@ const ServicesSection = () => {
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.3 }}
           >
-            <Link to="/services">
-              <button className="group relative w-full sm:w-auto px-6 py-3 md:px-8 md:py-4 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-lg overflow-hidden">
-                <div className="absolute inset-0 bg-black/20 translate-y-full transition-transform group-hover:translate-y-0" />
-                <span className="relative text-white font-medium whitespace-nowrap">Select Services</span>
-              </button>
+            <Link
+              to="/services"
+              className="group relative w-full sm:w-auto px-6 py-3 md:px-8 md:py-4 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-lg overflow-hidden flex items-center justify-center"
+            >
+              <div className="absolute inset-0 bg-black/20 translate-y-full transition-transform group-hover:translate-y-0"></div>
+              <span className="relative text-white font-medium whitespace-nowrap">Select Services</span>
             </Link>
           </motion.button>
         </div>

@@ -10,33 +10,31 @@ import Plans from '../components/plans';
 
 const Homepage = () => {
   return (
-    <div className="relative min-h-screen bg-zinc-900">
+    <div className="relative min-h-screen bg-zinc-900 scrollbar-hide">
       <div className="relative z-10 flex flex-col min-h-screen">
         <Navbar />
 
-        {/* Grid Background */}
         <div className="absolute inset-0 grid grid-cols-100 grid-rows-100 w-full h-full">
           <div className="border-gray-200 border-opacity-10"></div>
         </div>
 
-        {/* Hero Section with Parallax */}
         <HeroSection />
 
-        {/* Problems Section with Parallax */}
         <Problems />
 
         <ServicesSection />
 
         <Plans/>
 
-        {/* Testimonials Section with Parallax */}
         <TestimonialsSection />
 
-        <FAQs/>
-
-        {/* Footer */}
-        <Footer />
+        <div className="h-[750px] bg-gradient-to-r from-zinc-800 to-transparent">
+          <FAQs/>
+        </div>
+        
       </div>
+
+      <Footer />
     </div>
   );
 };

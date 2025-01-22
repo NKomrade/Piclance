@@ -32,7 +32,7 @@ const Navbar = () => {
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-8 text-lg font-semibold">
           <Link to="/" className="hover:text-gray-300 transition duration-300">Home</Link>
-          <Link to="/team" className="hover:text-gray-300 transition duration-300">Team</Link>
+          <Link to="/aboutus" className="hover:text-gray-300 transition duration-300">About</Link>
           <Link to="/contact" className="hover:text-gray-300 transition duration-300">Contact</Link>
         </div>
       </div>
@@ -42,7 +42,7 @@ const Navbar = () => {
         <div className="md:hidden bg-white bg-opacity-20 backdrop-blur-md text-white px-6 py-4 rounded-lg mt-2 shadow-lg">
           <div className="flex flex-col space-y-4">
             <Link to="/" onClick={() => setMenuOpen(false)} className="hover:text-gray-300 transition duration-300">Home</Link>
-            <Link to="/team" onClick={() => setMenuOpen(false)} className="hover:text-gray-300 transition duration-300">Team</Link>
+            <Link to="/aboutus" onClick={() => setMenuOpen(false)} className="hover:text-gray-300 transition duration-300">Team</Link>
             <Link to="/contact" onClick={() => setMenuOpen(false)} className="hover:text-gray-300 transition duration-300">Contact</Link>
           </div>
         </div>
