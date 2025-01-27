@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { StickyScroll } from "../components/ui/sticky-roll-reveal";
+import { StickyScroll } from "../components/Home/ui/sticky-roll-reveal";
 
 const About = () => {
   const content = [

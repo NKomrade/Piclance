@@ -1,12 +1,12 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import HeroSection from '../components/HeroSection';
-import ServicesSection from '../components/Services';
-import Problems from '../components/Problems';
-import TestimonialsSection from '../components/Testimonials';
-import FAQs from '../components/FAQs';
-import Plans from '../components/plans';
+import HeroSection from '../components/Home/HeroSection';
+import ServicesSection from '../components/Home/Services';
+import Problems from '../components/Home/Problems';
+import TestimonialsSection from '../components/Home/Testimonials';
+import FAQs from '../components/Home/FAQs';
+import Plans from '../components/Home/plans';
 
 const Homepage = () => {
   return (

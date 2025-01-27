@@ -1,5 +1,5 @@
 import React from "react";
-import { AnimatedTestimonials } from "../components/ui/animatedTestimonials";
+import { AnimatedTestimonials } from "./ui/animatedTestimonials";
 
 const TestimonialsSection = () => {
   const testimonials = [
