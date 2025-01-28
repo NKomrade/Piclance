@@ -2,18 +2,18 @@ import React from 'react';
 
 const GlassyCards = () => {
   const cards = [
-    { image: '/reels.jpg', heading: 'Short Form Video', text: 'Bite-sized stories, endless impact.' },
-    { image: '/vid-edit.jpg', heading: 'Long Form Video', text: 'Elevate your stories.' },
-    { image: '/image-5.jpg', heading: 'Social Media Management', text: 'Maximize your reach.' },
-    { image: '/gaming.jpg', heading: 'Gaming Content', text: 'Bringing your gameplay to life.' },
-    { image: '/prewedding.jpg', heading: 'Wedding & Prewedding Shoots', text: 'Love stories told beautifully.' },
-    { image: '/logo.jpg', heading: 'Logos', text: 'Brand identity at a glance.' },
-    { image: '/image-2.jpg', heading: 'Thumbnails', text: 'First impression that click.' },
-    { image: '/photo.jpg', heading: 'Photo Editing', text: 'Perfection, pixel by pixel.' },
-    { image: '/wedding.jpg', heading: 'Wedding Invitation', text: 'Elegant invites, lasting impact.' },
-    { image: '/brand1.jpg', heading: 'Brand Design', text: ' Stand out in the crowd with style.' },
-    { image: '/sfxgfx.jpg', heading: 'Vectors', text: 'Crisp, clean, and scalable artistry.' },
-    { image: '/web.jpg', heading: 'Web Design & Web Development', text: 'Build stunning websites' },
+    { image: '/Services/reels.jpg', heading: 'Short Form Video', text: 'Bite-sized stories, endless impact.' },
+    { image: '/Services/vid-edit.jpg', heading: 'Long Form Video', text: 'Elevate your stories.' },
+    { image: '/Services/image-5.jpg', heading: 'Social Media Management', text: 'Maximize your reach.' },
+    { image: '/Services/gaming.jpg', heading: 'Gaming Content', text: 'Bringing your gameplay to life.' },
+    { image: '/Services/prewedding.jpg', heading: 'Wedding & Prewedding Shoots', text: 'Love stories told beautifully.' },
+    { image: '/Services/logo.jpg', heading: 'Logos', text: 'Brand identity at a glance.' },
+    { image: '/Services/image-2.jpg', heading: 'Thumbnails', text: 'First impression that click.' },
+    { image: '/Services/photo.jpg', heading: 'Photo Editing', text: 'Perfection, pixel by pixel.' },
+    { image: '/Services/wedding.jpg', heading: 'Wedding Invitation', text: 'Elegant invites, lasting impact.' },
+    { image: '/Services/brand1.jpg', heading: 'Brand Design', text: ' Stand out in the crowd with style.' },
+    { image: '/Services/sfxgfx.jpg', heading: 'Vectors', text: 'Crisp, clean, and scalable artistry.' },
+    { image: '/Services/web.jpg', heading: 'Web Design & Web Development', text: 'Build stunning websites' },
   ];
 
   const SingleCard = ({ card }) => (

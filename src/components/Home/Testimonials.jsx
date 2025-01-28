@@ -7,19 +7,19 @@ const TestimonialsSection = () => {
       name: "Sarah Chen",
       designation: "Marketing Director",
       quote: "PicLance transformed our social media presence completely. Their video editing is top-notch and the results have exceeded our expectations.",
-      src: "/person1.jpeg"
+      src: "/Testimonials/person1.jpeg"
     },
     {
       name: "Michael Rodriguez",
       designation: "Professional Photographer",
       quote: "The quality of photo editing and attention to detail is exceptional. Working with PicLance has elevated the quality of my portfolio significantly.",
-      src: "/person2.jpeg"
+      src: "/Testimonials/person2.jpeg"
     },
     {
       name: "Emma Thompson",
       designation: "Business Owner",
       quote: "Their social media management strategy has helped us double our engagement in just months. The team's creativity and expertise are unmatched.",
-      src: "/person3.jpeg"
+      src: "/Testimonials/person3.jpeg"
     }
   ];
 

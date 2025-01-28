@@ -5,10 +5,10 @@ import { motion } from 'framer-motion';
 const ServicesSection = () => {
   // Sample service images - replace with your actual image paths
   const serviceImages = [
-    { src: '/vid-edit.jpg', alt: 'Video Editing', category: 'Video Production' },
-    { src: '/web.jpg', alt: 'Web Development', category: 'Development' },
-    { src: '/graphics.jpg', alt: 'Graphic Design', category: 'Design' },
-    { src: '/wedding.jpg', alt: 'Wedding Cards', category: 'Invitation' }
+    { src: '/Services/vid-edit.jpg', alt: 'Video Editing', category: 'Video Production' },
+    { src: '/Services/web.jpg', alt: 'Web Development', category: 'Development' },
+    { src: '/Services/graphic.jpg', alt: 'Graphic Design', category: 'Design' },
+    { src: '/Services/wedding.jpg', alt: 'Wedding Cards', category: 'Invitation' }
   ];
 
   const howToSteps = [
