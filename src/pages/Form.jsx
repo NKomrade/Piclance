@@ -472,13 +472,15 @@ const UserForm = () => {
                                 : [...prev.communicationPreference, mode.id]
                             }));
                           }}
-                          className="appearance-none w-4 h-4 rounded-full border-2 border-zinc-600 
+                          className="appearance-none w-4 h-4 border-2 border-zinc-600 
                             checked:border-purple-500 checked:bg-transparent 
                             transition-colors cursor-pointer"
                         />
-                        <div className={`absolute inset-0 rounded-full transition-transform
+                        <div className={`absolute inset-0 flex items-center justify-center transition-transform duration-300
                           ${formData.communicationPreference.includes(mode.id) ? 'scale-100' : 'scale-0'}`}>
-                          <div className="absolute inset-[3px] rounded-full bg-purple-500" />
+                          <span className="text-purple-500 text-l">
+                            ✓
+                          </span>
                         </div>
                       </div>
                       <span className="text-white">{mode.label}</span>
@@ -486,43 +488,106 @@ const UserForm = () => {
                   ))}
                 </div>
               </div>
+                {/*Category drop down menu*/}
+              <div className="space-y-2">
+                      {/* Label */}
+                      <label htmlFor="category" className="text-sm text-white">
+                        Category *
+                      </label>
 
-                <div className="space-y-2">
-                  <label htmlFor="category" className="text-sm text-white">Category *</label>
-                  <select
-                    id="category"
-                    name="category"
-                    required
-                    value={formData.category}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 bg-zinc-800/50 rounded-xl text-white outline-none"
-                  >
-                    <option value="">Select Category</option>
-                    {categories.map(cat => (
-                      <option key={cat.value} value={cat.value}>{cat.label}
-                      </option>
-                      ))}
-                    </select>
-                  </div>
-  
-                  <div className="space-y-2">
-                    <label htmlFor="projectDuration" className="text-sm text-white">Project Duration *</label>
+                      {/* Dropdown Container */}
+                      <div className="relative">
+                        {/* Dropdown Menu */}
+                        <select
+                          id="category"
+                          name="category"
+                          required
+                          value={formData.category}
+                          onChange={handleInputChange}
+                          className="w-full px-4 py-3 bg-zinc-800/50 rounded-xl text-white outline-none appearance-none hover:bg-zinc-800/70 focus:ring-2 focus:ring-purple-500 transition-all"
+                        >
+                          {/* Placeholder Option */}
+                          <option value="" disabled className="text-gray-400">
+                            Select Category
+                          </option>
+
+                          {/* Dynamic Options */}
+                          {categories.map((cat) => (
+                            <option key={cat.value} value={cat.value} className="bg-zinc-800">
+                              {cat.label}
+                            </option>
+                          ))}
+                        </select>
+
+                        {/* Custom Dropdown Arrow */}
+                        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                          <svg
+                            className="w-5 h-5 text-gray-400"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M19 9l-7 7-7-7"
+                            />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  {/*Project drop down menu*/}
+                    <div className="space-y-2">
+                  {/* Label */}
+                  <label htmlFor="projectDuration" className="text-sm text-white">
+                    Project Duration *
+                  </label>
+
+                  {/* Dropdown Container */}
+                  <div className="relative">
+                    {/* Dropdown Menu */}
                     <select
                       id="projectDuration"
                       name="projectDuration"
                       required
                       value={formData.projectDuration}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 bg-zinc-800/50 rounded-xl text-white outline-none"
+                      className="w-full px-4 py-3 bg-zinc-800/50 rounded-xl text-white outline-none appearance-none hover:bg-zinc-800/70 focus:ring-2 focus:ring-purple-500 transition-all"
                     >
-                      <option value="">Select Duration</option>
-                      {durations.map(duration => (
-                        <option key={duration.value} value={duration.value}>
+                      {/* Placeholder Option */}
+                      <option value="" disabled className="text-gray-400">
+                        Select Duration
+                      </option>
+
+                      {/* Dynamic Options */}
+                      {durations.map((duration) => (
+                        <option key={duration.value} value={duration.value} className="bg-zinc-800">
                           {duration.label}
                         </option>
                       ))}
                     </select>
+
+                    {/* Custom Dropdown Arrow */}
+                    <div className="absolute inset-y-0  right-0 flex items-center pr-3 pointer-events-none">
+                      <svg
+                        className="w-5 h-5 text-gray-400"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M19 9l-7 7-7-7"
+                        />
+                      </svg>
+                    </div>
                   </div>
+                </div>
                 </div>
               </div>
             </div>
