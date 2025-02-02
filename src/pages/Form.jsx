@@ -3,10 +3,12 @@ import { Loader2 } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import { ChevronLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import html2canvas from 'html2canvas';
+import { useLocation } from 'react-router-dom';
 import jsPDF from 'jspdf';
 
 const UserForm = () => {
+  const location = useLocation();
+
   const [formData, setFormData] = useState({
     userType: 'individual',
     // Individual fields
@@ -20,7 +22,7 @@ const UserForm = () => {
     // Common fields
     category: '',
     projectDuration: '',
-    services: [],
+    services: location.state?.selectedServices || [],
     communicationPreference: []
   });
 
@@ -92,87 +94,149 @@ const UserForm = () => {
     );
   };
 
-  const generatePDF = async () => {
-    // Create a temporary div for PDF content
-    const pdfContent = document.createElement('div');
-    pdfContent.style.width = '375px'; // Set fixed width to match a phone screen size
-    pdfContent.style.margin = '0 auto'; // Center the content horizontally
-    pdfContent.style.padding = '20px';
-    pdfContent.style.boxSizing = 'border-box';
-  
+  const generatePDF = () => {
+    const today = new Date().toLocaleDateString('en-US', { 
+        day: 'numeric', 
+        month: 'short', 
+        year: 'numeric'
+    });
+
     const fileName = formData.userType === 'individual'
-      ? formData.name.replace(/\s+/g, '_').toLowerCase()
-      : formData.orgName.replace(/\s+/g, '_').toLowerCase();
-  
-    // Responsive HTML content
-    pdfContent.innerHTML = `
-      <div style="font-family: 'Poppins', Arial, sans-serif; color: #333; line-height: 1.6; max-width: 100%; word-wrap: break-word;">
-        <div style="background-color: #6B46C1; color: white; padding: 20px; border-radius: 8px; text-align: center; display: flex; align-items: center; justify-content: center; height: 100px;">
-          <h1 style="font-size: 22px; margin: 0;">Service Request Details</h1>
-        </div>
-        <hr style="border: none; height: 2px; background-color: #6B46C1; margin: 10px 0;">
-        
-        <div style="margin-bottom: 20px;">
-          <h2 style="color: #6B46C1; font-size: 18px; font-weight: bold; border-bottom: 2px solid #6B46C1; display: inline-block; padding-bottom: 3px;">Client Information</h2>
-          ${formData.userType === 'individual'
-            ? `<p style="font-size: 14px; margin: 5px 0;"><strong>Name:</strong> ${formData.name}</p>
-               <p style="font-size: 14px; margin: 5px 0;"><strong>Email:</strong> ${formData.email}</p>
-               <p style="font-size: 14px; margin: 5px 0;"><strong>Phone:</strong> ${formData.phone}</p>`
-            : `<p style="font-size: 14px; margin: 5px 0;"><strong>Organization:</strong> ${formData.orgName}</p>
-               <p style="font-size: 14px; margin: 5px 0;"><strong>Email:</strong> ${formData.orgEmail}</p>
-               <p style="font-size: 14px; margin: 5px 0;"><strong>Phone:</strong> ${formData.orgPhone}</p>`}
-        </div>
-  
-        <div>
-          <h2 style="color: #6B46C1; font-size: 18px; font-weight: bold; border-bottom: 2px solid #6B46C1; display: inline-block; padding-bottom: 3px;">Project Details</h2>
-          <p style="font-size: 14px; margin: 5px 0;"><strong>Preferred Communication:</strong> ${formData.communicationPreference.map(id =>
-            communicationModes.find(mode => mode.id === id)?.label
-          ).join(', ')}</p>
-          <p style="font-size: 14px; margin: 5px 0;"><strong>Category:</strong> ${formData.category}</p>
-          <p style="font-size: 14px; margin: 5px 0;"><strong>Project Duration:</strong> ${formData.projectDuration}</p>
-          <p style="font-size: 14px; margin: 5px 0;"><strong>Selected Services:</strong> ${formData.services.join(', ')}</p>
-        </div>
-      </div>
-    `;
-  
-    document.body.appendChild(pdfContent);
-  
-    try {
-      const canvas = await html2canvas(pdfContent, {
-        scale: window.devicePixelRatio || 1, // Adjust for screen resolution
-        logging: false,
-        useCORS: true
-      });
-  
-      const imgData = canvas.toDataURL('image/jpeg', 0.9);
-      const pdf = new jsPDF({
-        orientation: 'portrait',
-        unit: 'px',
-        format: [375, 667], // Fixed size for phone screen
-        compress: true
-      });
-  
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-  
-      pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
-      document.body.removeChild(pdfContent);
-  
-      return {
-        pdf,
-        base64: pdf.output('datauristring'),
-        fileName: `${fileName}.pdf`
-      };
-    } catch (error) {
-      document.body.removeChild(pdfContent);
-      console.error('Error generating PDF:', error);
-      return null;
+        ? formData.name.replace(/\s+/g, '_').toLowerCase()
+        : formData.orgName.replace(/\s+/g, '_').toLowerCase();
+
+    const doc = new jsPDF();
+
+    // Add Lance logo at top left
+    const logoWidth = 40;
+    const logoHeight = 20;
+    doc.addImage("/Logos/PiclanceText.png", "PNG", 20, 10, logoWidth, logoHeight);
+
+    // Order Form title
+    doc.setFontSize(24);
+    doc.setFont("helvetica", "italic");
+    doc.text('Form', 105, 25, { align: 'center' });
+
+    // Add Date at the top right
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "bold");
+    doc.text('DATE:', 152, 18);
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "normal");
+    doc.text(today, 165, 18);
+
+    // Customer Details section
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(75, 0, 130); // Indigo color
+    doc.text('CUSTOMER DETAILS', 20, 45);
+
+    // Customer details box
+    doc.setDrawColor(75, 0, 130);
+    doc.rect(15, 50, 180, 70);
+
+    // Customer information
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+    doc.setTextColor(0);
+    let y = 60;
+
+    if (formData.userType === 'individual') {
+        doc.text(`NAME: ${formData.name}`, 20, y);
+        doc.text(`EMAIL: ${formData.email}`, 20, y + 10);
+        doc.text(`PHONE: ${formData.phone}`, 20, y + 20);
+    } else {
+        doc.text(`ORGANIZATION: ${formData.orgName}`, 20, y);
+        doc.text(`EMAIL: ${formData.orgEmail}`, 20, y + 10);
+        doc.text(`PHONE: ${formData.orgPhone}`, 20, y + 20);
     }
-  };    
+
+    doc.text(`CATEGORY: ${formData.category}`, 20, y + 35);
+    doc.text(`DURATION: ${formData.projectDuration}`, 20, y + 45);
+
+    // Communication preference
+    y = 140;
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(75, 0, 130);
+    doc.text('PREFERRED COMMUNICATION', 20, y);
+
+    doc.setDrawColor(75, 0, 130);
+    doc.rect(15, y + 5, 180, 25);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+    doc.setTextColor(0);
+    const commPrefs = formData.communicationPreference.map(id =>
+        communicationModes.find(mode => mode.id === id)?.label
+    ).join(', ');
+    doc.text(commPrefs, 20, y + 20);
+
+    // Services Table
+    y = 185;
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(75, 0, 130);
+    doc.text('REQUESTED SERVICES', 20, y);
+
+    y += 10;
+    doc.setLineWidth(0.5);
+    doc.setDrawColor(75, 0, 130);
+
+    const tableWidth = 180;
+    const colWidth = tableWidth / 2;
+    const rowHeight = 20; // Increased row height
+
+    // Draw table borders
+    doc.line(15, y, 195, y); // Top border
+    doc.line(15, y, 15, y + rowHeight * 3); // Left border
+    doc.line(195, y, 195, y + rowHeight * 3); // Right border
+    doc.line(15, y + rowHeight * 3, 195, y + rowHeight * 3); // Bottom border
+
+    // Draw vertical and horizontal lines
+    doc.line(105, y, 105, y + rowHeight * 3);
+    doc.line(15, y + rowHeight, 195, y + rowHeight);
+    doc.line(15, y + rowHeight * 2, 195, y + rowHeight * 2);
+
+    // Add table content with text wrapping
+    const tableData = [
+        ['Video Editing', formData.services.filter(s => 
+            services.videoEditing.some(v => v.id === s))
+            .map(s => services.videoEditing.find(v => v.id === s)?.title)
+            .join(', ') || '-'],
+        ['Static Projects', formData.services.filter(s => 
+            services.staticProjects.some(v => v.id === s))
+            .map(s => services.staticProjects.find(v => v.id === s)?.title)
+            .join(', ') || '-'],
+        ['Website', formData.services.filter(s => 
+            services.websites.some(v => v.id === s))
+            .map(s => services.websites.find(v => v.id === s)?.title)
+            .join(', ') || '-']
+    ];
+
+    doc.setFontSize(10);
+    tableData.forEach((row, index) => {
+        doc.setFont("helvetica", "bold");
+        doc.text(row[0], 20, y + rowHeight * index + 12);
+        doc.setFont("helvetica", "normal");
+
+        // Wrap text inside table cells
+        const wrappedText = doc.splitTextToSize(row[1], colWidth - 10);
+        wrappedText.forEach((line, lineIndex) => {
+            doc.text(line, 110, y + rowHeight * index + 12 + (lineIndex * 5));
+        });
+    });
+
+    return {
+        pdf: doc,
+        fileName: `${fileName}_${today.replace(/,|\s+/g, '_')}.pdf`,
+        base64: doc.output('datauristring')
+    };
+  };
   
   const sendToDiscord = async (pdfBase64, fileName) => {
     const webhookUrl = import.meta.env.VITE_FORMS_WEBHOOK_URL;
-
+    const chunkSize = 5 * 1024 * 1024; // 5MB chunks
+  
     const embed = {
       title: 'New Service Request',
       color: 0x6B46C1,
@@ -198,32 +262,44 @@ const UserForm = () => {
       for (let i = 0; i < binaryData.length; i++) {
         bytes[i] = binaryData.charCodeAt(i);
       }
+  
+      // Send data in chunks if needed
+      const totalChunks = Math.ceil(bytes.length / chunkSize);
       
-      const pdfBlob = new Blob([bytes], { type: 'application/pdf' });
-      
-      // Check file size
-      if (pdfBlob.size > 7.5 * 1024 * 1024) { // Discord's limit is 8MB
-        throw new Error('PDF file size exceeds Discord\'s limit');
+      for (let i = 0; i < totalChunks; i++) {
+        const start = i * chunkSize;
+        const end = Math.min(start + chunkSize, bytes.length);
+        const chunk = bytes.slice(start, end);
+        
+        const chunkBlob = new Blob([chunk], { type: 'application/pdf' });
+        const formData = new FormData();
+        
+        // Only send embed with first chunk
+        if (i === 0) {
+          formData.append('payload_json', JSON.stringify({ embeds: [embed] }));
+        }
+        
+        const chunkFileName = totalChunks > 1 
+          ? `${fileName.replace('.pdf', '')}_part${i + 1}.pdf`
+          : fileName;
+        
+        formData.append('file', chunkBlob, chunkFileName);
+  
+        const response = await fetch(webhookUrl, {
+          method: 'POST',
+          body: formData
+        });
+  
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
       }
   
-      const formData = new FormData();
-      formData.append('payload_json', JSON.stringify({ embeds: [embed] }));
-      formData.append('file', pdfBlob, fileName);
-  
-      const response = await fetch(webhookUrl, {
-        method: 'POST',
-        body: formData
-      });
-  
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+      return true;
     } catch (error) {
       console.error('Error sending to Discord:', error);
-      // Instead of throwing, we'll return false to indicate failure
       return false;
     }
-    return true;
   };
 
   const handleSubmit = async (e) => {
@@ -313,7 +389,7 @@ const UserForm = () => {
       </label>
     ));
   };
-
+  
   return (
     <div className="min-h-screen bg-gradient-to-b from-zinc-900 via-zinc-900 to-black">
       <Navbar />
