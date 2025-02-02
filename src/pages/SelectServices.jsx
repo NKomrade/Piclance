@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import { Video, Image, Globe, ChevronRight, ChevronLeft } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const SelectServices = () => {
+  const navigate = useNavigate();
   const [selectedServices, setSelectedServices] = useState([]);
 
   const services = {
@@ -139,6 +140,7 @@ const SelectServices = () => {
         
         <div className="flex justify-end p-8">
           <button
+            onClick={() => navigate('/form', { state: { selectedServices }})}
             disabled={selectedServices.length === 0}
             className={`
               flex items-center gap-2 px-8 py-3 rounded-lg font-medium
