@@ -8,22 +8,22 @@ const SelectServices = () => {
 
   const services = {
     videoEditing: [
-      { id: 'short-form', title: 'Short Form Video', description: 'Bite-sized stories, endless impact.', icon: '/Services/reels.jpg' },
-      { id: 'long-form', title: 'Long Form Video', description: 'Elevate your stories.', icon: '/Services/vid-edit.jpg' },
-      { id: 'social-media', title: 'Social Media Management', description: 'Maximize your reach.', icon: '/Services/image-5.jpg' },
-      { id: 'gaming', title: 'Gaming Content', description: 'Bringing your gameplay to life.', icon: '/Services/gaming.jpg' },
-      { id: 'wedding-shoots', title: 'Wedding & Prewedding Shoots', description: 'Love stories told beautifully.', icon: '/Services/prewedding.jpg' },
+      { id: 'short-form', title: 'Short Form Video', description: 'Bite-sized stories, endless impact.', icon: '/Services/reels.png' },
+      { id: 'long-form', title: 'Long Form Video', description: 'Elevate your stories.', icon: '/Services/vid-edit.png' },
+      { id: 'social-media', title: 'Social Media Management', description: 'Maximize your reach.', icon: '/Services/image-5.png' },
+      { id: 'gaming', title: 'Gaming Content', description: 'Bringing your gameplay to life.', icon: '/Services/gaming.png' },
+      { id: 'wedding-shoots', title: 'Wedding & Prewedding Shoots', description: 'Love stories told beautifully.', icon: '/Services/prewedding.png' },
     ],
     staticProjects: [
-      { id: 'logos', title: 'Logos', description: 'Brand identity at a glance.', icon: '/Services/logo.jpg' },
-      { id: 'thumbnails', title: 'Thumbnails', description: 'First impression that click.', icon: '/Services/image-2.jpg' },
-      { id: 'photo-edits', title: 'Photo Editing', description: 'Perfection, pixel by pixel.', icon: '/Services/photo.jpg' },
-      { id: 'wedding-invite', title: 'Wedding Invitation', description: 'Elegant invites, lasting impact.', icon: '/Services/wedding.jpg' },
-      { id: 'brand-design', title: 'Brand Design', description: 'Stand out in the crowd with style.', icon: '/Services/brand.jpg' },
-      { id: 'vectors', title: 'Vectors', description: 'Crisp, clean, and scalable artistry.', icon: '/Services/sfxgfx.jpg' }
+      { id: 'logos', title: 'Logos', description: 'Brand identity at a glance.', icon: '/Services/logo.png' },
+      { id: 'thumbnails', title: 'Thumbnails', description: 'First impression that click.', icon: '/Services/image-2.png' },
+      { id: 'photo-edits', title: 'Photo Editing', description: 'Perfection, pixel by pixel.', icon: '/Services/photo.png' },
+      { id: 'wedding-invite', title: 'Wedding Invitation', description: 'Elegant invites, lasting impact.', icon: '/Services/wedding.png' },
+      { id: 'brand-design', title: 'Brand Design', description: 'Stand out in the crowd with style.', icon: '/Services/brand.png' },
+      { id: 'vectors', title: 'Vectors', description: 'Crisp, clean, and scalable artistry.', icon: '/Services/sfxgfx.png' }
     ],
     websites: [
-      { id: 'web-design-dev', title: 'Web Design & Web Development', description: 'Build stunning websites', icon: '/Services/web.jpg' }
+      { id: 'web-design-dev', title: 'Web Design & Web Development', description: 'Build stunning websites', icon: '/Services/web.png' }
     ]
   };
 
