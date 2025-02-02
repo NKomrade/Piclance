@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const HeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
-  const slides = ["/HeroImages/aboutus.jpg", "/HeroImages/Home.jpg", "/HeroImages/services.jpg"];
+  const slides = ["/HeroImages/aboutus.png", "/HeroImages/Home.png", "/HeroImages/services.png"];
 
   useEffect(() => {
     const interval = setInterval(() => {
