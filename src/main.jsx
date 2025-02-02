@@ -1,10 +1,11 @@
-// src/main.jsx
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import './index.css';  // Tailwind CSS import
+import './index.css';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+const root = ReactDOM.createRoot(document.getElementById('root')); // Create the root ONCE
+
+root.render( // Use root.render for updates
   <React.StrictMode>
     <App />
   </React.StrictMode>
