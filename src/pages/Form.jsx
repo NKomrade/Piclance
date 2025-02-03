@@ -5,6 +5,7 @@ import { ChevronLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import jsPDF from 'jspdf';
+import createOrder from '../utils/createOrder';
 
 const UserForm = () => {
   const location = useLocation();
@@ -17,8 +18,9 @@ const UserForm = () => {
     email: '',
     // Organization fields
     orgName: '',
-    orgEmail: '',
     orgPhone: '',
+    orgEmail: '',
+    
     // Common fields
     category: '',
     projectDuration: '',
@@ -94,142 +96,161 @@ const UserForm = () => {
     );
   };
 
-  const generatePDF = () => {
-    const today = new Date().toLocaleDateString('en-US', { 
-        day: 'numeric', 
-        month: 'short', 
-        year: 'numeric'
+  const generatePDF = (orderNumber) => {
+    const today = new Date().toLocaleDateString('en-US', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
     });
-
+  
     const fileName = formData.userType === 'individual'
-        ? formData.name.replace(/\s+/g, '_').toLowerCase()
-        : formData.orgName.replace(/\s+/g, '_').toLowerCase();
-
+      ? formData.name.replace(/\s+/g, '_').toLowerCase()
+      : formData.orgName.replace(/\s+/g, '_').toLowerCase();
+  
     const doc = new jsPDF();
-
+  
     // Add Lance logo at top left
     const logoWidth = 40;
     const logoHeight = 20;
-    doc.addImage("/Logos/PiclanceText.png", "PNG", 20, 10, logoWidth, logoHeight);
-
+    doc.addImage('/Logos/PiclanceText.png', 'PNG', 20, 10, logoWidth, logoHeight);
+  
     // Order Form title
     doc.setFontSize(24);
-    doc.setFont("helvetica", "italic");
+    doc.setFont('helvetica', 'italic');
     doc.text('Form', 105, 25, { align: 'center' });
-
+  
     // Add Date at the top right
     doc.setFontSize(10);
-    doc.setFont("helvetica", "bold");
+    doc.setFont('helvetica', 'bold');
     doc.text('DATE:', 152, 18);
     doc.setFontSize(12);
-    doc.setFont("helvetica", "normal");
+    doc.setFont('helvetica', 'normal');
     doc.text(today, 165, 18);
-
+  
+    // Add Order Number below the date
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'bold');
+    doc.text('ORDER NUMBER:', 152, 28);
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'normal');
+    doc.text(orderNumber, 152, 35);
+  
     // Customer Details section
     doc.setFontSize(12);
-    doc.setFont("helvetica", "bold");
+    doc.setFont('helvetica', 'bold');
     doc.setTextColor(75, 0, 130); // Indigo color
     doc.text('CUSTOMER DETAILS', 20, 45);
-
+  
     // Customer details box
     doc.setDrawColor(75, 0, 130);
     doc.rect(15, 50, 180, 70);
-
+  
     // Customer information
-    doc.setFont("helvetica", "normal");
+    doc.setFont('helvetica', 'normal');
     doc.setFontSize(10);
     doc.setTextColor(0);
     let y = 60;
-
+  
     if (formData.userType === 'individual') {
-        doc.text(`NAME: ${formData.name}`, 20, y);
-        doc.text(`EMAIL: ${formData.email}`, 20, y + 10);
-        doc.text(`PHONE: ${formData.phone}`, 20, y + 20);
+      doc.text(`NAME: ${formData.name}`, 20, y);
+      doc.text(`EMAIL: ${formData.email}`, 20, y + 10);
+      doc.text(`PHONE: ${formData.phone}`, 20, y + 20);
     } else {
-        doc.text(`ORGANIZATION: ${formData.orgName}`, 20, y);
-        doc.text(`EMAIL: ${formData.orgEmail}`, 20, y + 10);
-        doc.text(`PHONE: ${formData.orgPhone}`, 20, y + 20);
+      doc.text(`ORGANIZATION: ${formData.orgName}`, 20, y);
+      doc.text(`EMAIL: ${formData.orgEmail}`, 20, y + 10);
+      doc.text(`PHONE: ${formData.orgPhone}`, 20, y + 20);
     }
-
+  
     doc.text(`CATEGORY: ${formData.category}`, 20, y + 35);
     doc.text(`DURATION: ${formData.projectDuration}`, 20, y + 45);
-
+  
     // Communication preference
     y = 140;
     doc.setFontSize(12);
-    doc.setFont("helvetica", "bold");
+    doc.setFont('helvetica', 'bold');
     doc.setTextColor(75, 0, 130);
     doc.text('PREFERRED COMMUNICATION', 20, y);
-
+  
     doc.setDrawColor(75, 0, 130);
     doc.rect(15, y + 5, 180, 25);
-    doc.setFont("helvetica", "normal");
+    doc.setFont('helvetica', 'normal');
     doc.setFontSize(10);
     doc.setTextColor(0);
-    const commPrefs = formData.communicationPreference.map(id =>
-        communicationModes.find(mode => mode.id === id)?.label
-    ).join(', ');
+    const commPrefs = formData.communicationPreference
+      .map((id) => communicationModes.find((mode) => mode.id === id)?.label)
+      .join(', ');
     doc.text(commPrefs, 20, y + 20);
-
+  
     // Services Table
     y = 185;
     doc.setFontSize(12);
-    doc.setFont("helvetica", "bold");
+    doc.setFont('helvetica', 'bold');
     doc.setTextColor(75, 0, 130);
     doc.text('REQUESTED SERVICES', 20, y);
-
+  
     y += 10;
     doc.setLineWidth(0.5);
     doc.setDrawColor(75, 0, 130);
-
+  
     const tableWidth = 180;
     const colWidth = tableWidth / 2;
-    const rowHeight = 20; // Increased row height
-
+    const rowHeight = 30; // Increased row height
+  
     // Draw table borders
     doc.line(15, y, 195, y); // Top border
     doc.line(15, y, 15, y + rowHeight * 3); // Left border
     doc.line(195, y, 195, y + rowHeight * 3); // Right border
     doc.line(15, y + rowHeight * 3, 195, y + rowHeight * 3); // Bottom border
 
+  
     // Draw vertical and horizontal lines
-    doc.line(105, y, 105, y + rowHeight * 3);
-    doc.line(15, y + rowHeight, 195, y + rowHeight);
-    doc.line(15, y + rowHeight * 2, 195, y + rowHeight * 2);
+    doc.line(105, y, 105, y + rowHeight * 3); // Vertical line in the middle
+    doc.line(15, y + rowHeight, 195, y + rowHeight); // Horizontal line between rows
+    doc.line(15, y + rowHeight * 2, 195, y + rowHeight * 2); // Horizontal line between rows
 
+  
     // Add table content with text wrapping
     const tableData = [
-        ['Video Editing', formData.services.filter(s => 
-            services.videoEditing.some(v => v.id === s))
-            .map(s => services.videoEditing.find(v => v.id === s)?.title)
-            .join(', ') || '-'],
-        ['Static Projects', formData.services.filter(s => 
-            services.staticProjects.some(v => v.id === s))
-            .map(s => services.staticProjects.find(v => v.id === s)?.title)
-            .join(', ') || '-'],
-        ['Website', formData.services.filter(s => 
-            services.websites.some(v => v.id === s))
-            .map(s => services.websites.find(v => v.id === s)?.title)
-            .join(', ') || '-']
+      [
+        'Video Editing',
+        formData.services
+          .filter((s) => services.videoEditing.some((v) => v.id === s))
+          .map((s) => services.videoEditing.find((v) => v.id === s)?.title)
+          .join(', ') || '-',
+      ],
+      [
+        'Static Projects',
+        formData.services
+          .filter((s) => services.staticProjects.some((v) => v.id === s))
+          .map((s) => services.staticProjects.find((v) => v.id === s)?.title)
+          .join(', ') || '-',
+      ],
+      [
+        'Website',
+        formData.services
+          .filter((s) => services.websites.some((v) => v.id === s))
+          .map((s) => services.websites.find((v) => v.id === s)?.title)
+          .join(', ') || '-',
+      ],
     ];
-
+    
     doc.setFontSize(10);
     tableData.forEach((row, index) => {
-        doc.setFont("helvetica", "bold");
-        doc.text(row[0], 20, y + rowHeight * index + 12);
-        doc.setFont("helvetica", "normal");
-
-        // Wrap text inside table cells
-        const wrappedText = doc.splitTextToSize(row[1], colWidth - 10);
-        wrappedText.forEach((line, lineIndex) => {
-            doc.text(line, 110, y + rowHeight * index + 12 + (lineIndex * 5));
-        });
+      doc.setFont('helvetica', 'bold');
+      doc.text(row[0], 20, y + rowHeight * index + 12);
+      doc.setFont('helvetica', 'normal');
+  
+      // Wrap text inside table cells
+      const wrappedText = doc.splitTextToSize(row[1], colWidth - 10);
+      wrappedText.forEach((line, lineIndex) => {
+        doc.text(line, 110, y + rowHeight * index + 12 + lineIndex * 5);
+      });
     });
-
+  
     return {
-        pdf: doc,
-        fileName: `${fileName}_${today.replace(/,|\s+/g, '_')}.pdf`,
-        base64: doc.output('datauristring')
+      pdf: doc,
+      fileName: `${fileName}_${today.replace(/,|\s+/g, '_')}.pdf`,
+      base64: doc.output('datauristring'),
     };
   };
   
@@ -305,9 +326,22 @@ const UserForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    
+  
     try {
-      const pdfData = await generatePDF();
+      // Generate the order number
+      const orderNumber = await createOrder(
+        formData.userType === 'individual' ? formData.email : formData.orgEmail,
+        formData.userType === 'individual' ? formData.phone : formData.orgPhone
+      );
+  
+      if (!orderNumber) {
+        throw new Error('Failed to generate order number.');
+      }
+  
+      // Generate the PDF with the order number
+      const pdfData = await generatePDF(orderNumber);
+  
+      // Send the PDF to Discord
       if (pdfData) {
         await sendToDiscord(pdfData.base64, pdfData.fileName);
         setShowConfirmation(true);
@@ -316,6 +350,7 @@ const UserForm = () => {
       }
     } catch (error) {
       console.error('Error:', error);
+      alert('Failed to create order. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -501,19 +536,7 @@ const UserForm = () => {
                         placeholder="Enter organization name"
                       />
                     </div>
-                    <div className="space-y-2">
-                      <label htmlFor="orgEmail" className="text-sm text-white">Organization Email *</label>
-                      <input
-                        type="email"
-                        id="orgEmail"
-                        name="orgEmail"
-                        required
-                        value={formData.orgEmail}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 bg-zinc-800/50 rounded-xl text-white outline-none"
-                        placeholder="Enter organization email"
-                      />
-                    </div>
+                    
                     <div className="space-y-2">
                       <label htmlFor="orgPhone" className="text-sm text-white">Contact Number *</label>
                       <input
@@ -527,6 +550,21 @@ const UserForm = () => {
                         placeholder="Enter contact number"
                       />
                     </div>
+
+                    <div className="space-y-2">
+                      <label htmlFor="orgEmail" className="text-sm text-white">Organization Email *</label>
+                      <input
+                        type="email"
+                        id="orgEmail"
+                        name="orgEmail"
+                        required
+                        value={formData.orgEmail}
+                        onChange={handleInputChange}
+                        className="w-full px-4 py-3 bg-zinc-800/50 rounded-xl text-white outline-none"
+                        placeholder="Enter organization email"
+                      />
+                    </div>
+                    
                   </>
                 )}
 
