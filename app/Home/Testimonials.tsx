@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import { AnimatedTestimonials } from "@/app/components/ui/animated-testimonials";
 
 interface Testimonial {

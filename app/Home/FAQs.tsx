@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { ChevronDown, Users, Rocket, Zap, Clock, IndianRupee, LucideIcon } from 'lucide-react';
+import { ChevronDown, Users, Rocket, Zap, Clock, IndianRupee } from 'lucide-react';
 
 interface FAQItem {
   icon: React.ReactNode;
