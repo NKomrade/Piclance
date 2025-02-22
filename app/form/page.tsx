@@ -1,21 +1,31 @@
+// app/form/page.tsx
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { Loader2, ChevronLeft } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import jsPDF from 'jspdf';
 
-// Dynamically import jsPDF when needed
-const loadJsPDF = async () => {
-  const { jsPDF } = await import('jspdf');
-  return jsPDF;
+const ErrorFallback = ({ error, resetErrorBoundary }: { error: Error; resetErrorBoundary: () => void }) => {
+  return (
+    <div role="alert" className="p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+      <p>Something went wrong:</p>
+      <pre className="whitespace-pre-wrap">{error.message}</pre>
+      <button
+        onClick={resetErrorBoundary}
+        className="mt-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+      >
+        Try again
+      </button>
+    </div>
+  );
 };
 
 // Types
-type UserType = 'individual' | 'organization';
-
 interface FormData {
-  userType: UserType;
+  userType: 'individual' | 'organization';
   name: string;
   phone: string;
   email: string;
@@ -58,28 +68,6 @@ interface SubmitButtonProps {
   isLoading: boolean;
 }
 
-interface PDFData {
-  pdf: any; // Use instance type correctly
-  fileName: string;
-  base64: string;
-}
-
-interface DiscordEmbed {
-  title: string;
-  color: number;
-  fields: {
-    name: string;
-    value: string;
-    inline?: boolean;
-  }[];
-  timestamp: string;
-}
-
-interface DiscordWebhookError extends Error {
-  status?: number;
-  statusText?: string;
-}
-
 const UserForm = () => {
   const searchParams = useSearchParams();
   const initialFormData: FormData = {
@@ -99,7 +87,6 @@ const UserForm = () => {
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [showConfirmation, setShowConfirmation] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [pdfInstance, setPdfInstance] = useState<{ pdf: any; fileName: string } | null>(null);
 
   const categories: Category[] = [
     { value: 'educational', label: 'Educational' },
@@ -166,276 +153,207 @@ const UserForm = () => {
     );
   };
 
-  const generatePDF = async (): Promise<PDFData | null> => {
-    const { default: jsPDF } = await import('jspdf');
+  const generatePDF = () => {
+    const today = new Date().toLocaleDateString('en-US', { 
+      day: 'numeric', 
+      month: 'short', 
+      year: 'numeric'
+    });
+
+    const fileName = formData.userType === 'individual'
+      ? formData.name.replace(/\s+/g, '_').toLowerCase()
+      : formData.orgName.replace(/\s+/g, '_').toLowerCase();
+
     const doc = new jsPDF();
 
-    try {
-      const today = new Date().toLocaleDateString('en-US', { 
-        day: 'numeric', 
-        month: 'short', 
-        year: 'numeric'
-      });
+    // Add Lance logo at top left
+    const logoWidth = 40;
+    const logoHeight = 20;
+    doc.addImage("/PiclanceText.png", "PNG", 20, 10, logoWidth, logoHeight);
 
-      const fileName = formData.userType === 'individual'
-        ? formData.name.replace(/\s+/g, '_').toLowerCase()
-        : formData.orgName.replace(/\s+/g, '_').toLowerCase();
+    // Order Form title
+    doc.setFontSize(24);
+    doc.setFont("helvetica", "italic");
+    doc.text('Form', 105, 25, { align: 'center' });
 
+    // Add Date at the top right
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "bold");
+    doc.text('DATE:', 152, 18);
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "normal");
+    doc.text(today, 165, 18);
 
-      // Add Lance logo at top left
-      const logoWidth = 40;
-      const logoHeight = 20;
-      doc.addImage("/PiclanceText.png", "PNG", 20, 10, logoWidth, logoHeight);
+    // Customer Details section
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(75, 0, 130); // Indigo color
+    doc.text('CUSTOMER DETAILS', 20, 45);
 
-      // Order Form title
-      doc.setFontSize(24);
-      doc.setFont("helvetica", "italic");
-      doc.text('Form', 105, 25, { align: 'center' });
+    // Customer details box
+    doc.setDrawColor(75, 0, 130);
+    doc.rect(15, 50, 180, 70);
 
-      // Add Date at the top right
-      doc.setFontSize(10);
-      doc.setFont("helvetica", "bold");
-      doc.text('DATE:', 152, 18);
-      doc.setFontSize(12);
-      doc.setFont("helvetica", "normal");
-      doc.text(today, 165, 18);
+    // Customer information
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+    doc.setTextColor(0);
+    let y = 60;
 
-      // Customer Details section
-      doc.setFontSize(12);
-      doc.setFont("helvetica", "bold");
-      doc.setTextColor(75, 0, 130); // Indigo color
-      doc.text('CUSTOMER DETAILS', 20, 45);
-
-      // Customer details box
-      doc.setDrawColor(75, 0, 130);
-      doc.rect(15, 50, 180, 70);
-
-      // Customer information
-      doc.setFont("helvetica", "normal");
-      doc.setFontSize(10);
-      doc.setTextColor(0);
-      let y = 60;
-
-      if (formData.userType === 'individual') {
-          doc.text(`NAME: ${formData.name}`, 20, y);
-          doc.text(`EMAIL: ${formData.email}`, 20, y + 10);
-          doc.text(`PHONE: ${formData.phone}`, 20, y + 20);
-      } else {
-          doc.text(`ORGANIZATION: ${formData.orgName}`, 20, y);
-          doc.text(`EMAIL: ${formData.orgEmail}`, 20, y + 10);
-          doc.text(`PHONE: ${formData.orgPhone}`, 20, y + 20);
-      }
-
-      doc.text(`CATEGORY: ${formData.category}`, 20, y + 35);
-      doc.text(`DURATION: ${formData.projectDuration}`, 20, y + 45);
-
-      // Communication preference
-      y = 140;
-      doc.setFontSize(12);
-      doc.setFont("helvetica", "bold");
-      doc.setTextColor(75, 0, 130);
-      doc.text('PREFERRED COMMUNICATION', 20, y);
-
-      doc.setDrawColor(75, 0, 130);
-      doc.rect(15, y + 5, 180, 25);
-      doc.setFont("helvetica", "normal");
-      doc.setFontSize(10);
-      doc.setTextColor(0);
-      const commPrefs = formData.communicationPreference.map(id =>
-          communicationModes.find(mode => mode.id === id)?.label
-      ).join(', ');
-      doc.text(commPrefs, 20, y + 20);
-
-      // Services Table
-      y = 185;
-      doc.setFontSize(12);
-      doc.setFont("helvetica", "bold");
-      doc.setTextColor(75, 0, 130);
-      doc.text('REQUESTED SERVICES', 20, y);
-
-      y += 10;
-      doc.setLineWidth(0.5);
-      doc.setDrawColor(75, 0, 130);
-
-      const tableWidth = 180;
-      const colWidth = tableWidth / 2;
-      const rowHeight = 20; // Increased row height
-
-      // Draw table borders
-      doc.line(15, y, 195, y); // Top border
-      doc.line(15, y, 15, y + rowHeight * 3); // Left border
-      doc.line(195, y, 195, y + rowHeight * 3); // Right border
-      doc.line(15, y + rowHeight * 3, 195, y + rowHeight * 3); // Bottom border
-
-      // Draw vertical and horizontal lines
-      doc.line(105, y, 105, y + rowHeight * 3);
-      doc.line(15, y + rowHeight, 195, y + rowHeight);
-      doc.line(15, y + rowHeight * 2, 195, y + rowHeight * 2);
-
-      // Add table content with text wrapping
-      const tableData = [
-          ['Video Editing', formData.services.filter(s => 
-              services.videoEditing.some(v => v.id === s))
-              .map(s => services.videoEditing.find(v => v.id === s)?.title)
-              .join(', ') || '-'],
-          ['Static Projects', formData.services.filter(s => 
-              services.staticProjects.some(v => v.id === s))
-              .map(s => services.staticProjects.find(v => v.id === s)?.title)
-              .join(', ') || '-'],
-          ['Website', formData.services.filter(s => 
-              services.websites.some(v => v.id === s))
-              .map(s => services.websites.find(v => v.id === s)?.title)
-              .join(', ') || '-']
-      ];
-
-      doc.setFontSize(10);
-      tableData.forEach((row, index) => {
-          doc.setFont("helvetica", "bold");
-          doc.text(row[0], 20, y + rowHeight * index + 12);
-          doc.setFont("helvetica", "normal");
-
-          // Wrap text inside table cells
-          const wrappedText = doc.splitTextToSize(row[1], colWidth - 10);
-          wrappedText.forEach((line: string, lineIndex: number) => {
-              doc.text(line, 110, y + rowHeight * index + 12 + (lineIndex * 5));
-          });
-      });
-
-      return {
-        pdf: doc,
-        fileName: `${fileName}_${today.replace(/,|\s+/g, '_')}.pdf`,
-        base64: doc.output('datauristring')
-      };
-    }catch (error) {
-      console.error('Error generating PDF:', error);
-      return null;
+    if (formData.userType === 'individual') {
+        doc.text(`NAME: ${formData.name}`, 20, y);
+        doc.text(`EMAIL: ${formData.email}`, 20, y + 10);
+        doc.text(`PHONE: ${formData.phone}`, 20, y + 20);
+    } else {
+        doc.text(`ORGANIZATION: ${formData.orgName}`, 20, y);
+        doc.text(`EMAIL: ${formData.orgEmail}`, 20, y + 10);
+        doc.text(`PHONE: ${formData.orgPhone}`, 20, y + 20);
     }
+
+    doc.text(`CATEGORY: ${formData.category}`, 20, y + 35);
+    doc.text(`DURATION: ${formData.projectDuration}`, 20, y + 45);
+
+    // Communication preference
+    y = 140;
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(75, 0, 130);
+    doc.text('PREFERRED COMMUNICATION', 20, y);
+
+    doc.setDrawColor(75, 0, 130);
+    doc.rect(15, y + 5, 180, 25);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+    doc.setTextColor(0);
+    const commPrefs = formData.communicationPreference.map(id =>
+        communicationModes.find(mode => mode.id === id)?.label
+    ).join(', ');
+    doc.text(commPrefs, 20, y + 20);
+
+    // Services Table
+    y = 185;
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(75, 0, 130);
+    doc.text('REQUESTED SERVICES', 20, y);
+
+    y += 10;
+    doc.setLineWidth(0.5);
+    doc.setDrawColor(75, 0, 130);
+
+    const tableWidth = 180;
+    const colWidth = tableWidth / 2;
+    const rowHeight = 20; // Increased row height
+
+    // Draw table borders
+    doc.line(15, y, 195, y); // Top border
+    doc.line(15, y, 15, y + rowHeight * 3); // Left border
+    doc.line(195, y, 195, y + rowHeight * 3); // Right border
+    doc.line(15, y + rowHeight * 3, 195, y + rowHeight * 3); // Bottom border
+
+    // Draw vertical and horizontal lines
+    doc.line(105, y, 105, y + rowHeight * 3);
+    doc.line(15, y + rowHeight, 195, y + rowHeight);
+    doc.line(15, y + rowHeight * 2, 195, y + rowHeight * 2);
+
+    // Add table content with text wrapping
+    const tableData = [
+        ['Video Editing', formData.services.filter(s => 
+            services.videoEditing.some(v => v.id === s))
+            .map(s => services.videoEditing.find(v => v.id === s)?.title)
+            .join(', ') || '-'],
+        ['Static Projects', formData.services.filter(s => 
+            services.staticProjects.some(v => v.id === s))
+            .map(s => services.staticProjects.find(v => v.id === s)?.title)
+            .join(', ') || '-'],
+        ['Website', formData.services.filter(s => 
+            services.websites.some(v => v.id === s))
+            .map(s => services.websites.find(v => v.id === s)?.title)
+            .join(', ') || '-']
+    ];
+
+    doc.setFontSize(10);
+    tableData.forEach((row, index) => {
+        doc.setFont("helvetica", "bold");
+        doc.text(row[0], 20, y + rowHeight * index + 12);
+        doc.setFont("helvetica", "normal");
+
+        // Wrap text inside table cells
+        const wrappedText = doc.splitTextToSize(row[1], colWidth - 10);
+        wrappedText.forEach((line: string, lineIndex: number) => {
+            doc.text(line, 110, y + rowHeight * index + 12 + (lineIndex * 5));
+        });
+    });
+
+    return {
+      pdf: doc,
+      fileName: `${fileName}_${today.replace(/,|\s+/g, '_')}.pdf`,
+      base64: doc.output('datauristring')
+    };
   };
 
-  const sendToDiscord = async (pdfBase64: string, fileName: string, formData: FormData): Promise<boolean> => {
+  const sendToDiscord = async (pdfBase64: string, fileName: string): Promise<boolean> => {
     const webhookUrl = process.env.NEXT_PUBLIC_FORMS_WEBHOOK_URL;
-    const MAX_CHUNK_SIZE = 5 * 1024 * 1024; // 5MB Discord limit
-    const MAX_RETRIES = 3;
-    const RETRY_DELAY = 1000; // 1 second
-  
-    if (!webhookUrl) {
-      console.error('Discord webhook URL is not configured');
-      return false;
-    }
-  
-    const embed: DiscordEmbed = {
+    const chunkSize = 5 * 1024 * 1024; // 5MB chunks
+
+    const embed = {
       title: 'New Service Request',
       color: 0x6B46C1,
       fields: [
         { name: 'User Type', value: formData.userType, inline: true },
-        {
-          name: formData.userType === 'individual' ? 'Name' : 'Organization',
-          value: formData.userType === 'individual' ? formData.name : formData.orgName,
-          inline: true
-        },
-        {
-          name: 'Email',
-          value: formData.userType === 'individual' ? formData.email : formData.orgEmail,
-          inline: true
-        },
+        { name: formData.userType === 'individual' ? 'Name' : 'Organization', 
+          value: formData.userType === 'individual' ? formData.name : formData.orgName, 
+          inline: true },
+        { name: 'Email', 
+          value: formData.userType === 'individual' ? formData.email : formData.orgEmail, 
+          inline: true },
         { name: 'Category', value: formData.category, inline: true },
         { name: 'Duration', value: formData.projectDuration, inline: true },
-        {
-          name: 'Services',
-          value: formData.services.length > 0 
-            ? formData.services.join(', ').slice(0, 1024) 
-            : 'None'
-        }
+        { name: 'Services', value: formData.services.join(', ').slice(0, 1024) || 'None' }
       ],
       timestamp: new Date().toISOString()
     };
-  
-    // Helper function to send chunk with retries
-    const sendChunkWithRetry = async (
-      chunk: Blob,
-      chunkFileName: string,
-      isFirstChunk: boolean,
-      retryCount = 0
-    ): Promise<boolean> => {
-      try {
-        const formDataToSend = new FormData();
-        
-        // Only include embed data in the first chunk
-        if (isFirstChunk) {
-          formDataToSend.append('payload_json', JSON.stringify({ embeds: [embed] }));
-        }
-        
-        formDataToSend.append('file', chunk, chunkFileName);
-  
-        const response = await fetch(webhookUrl, {
-          method: 'POST',
-          body: formDataToSend
-        });
-  
-        if (!response.ok) {
-          throw Object.assign(
-            new Error(`HTTP error! status: ${response.status}`),
-            { status: response.status, statusText: response.statusText }
-          );
-        }
-  
-        // Discord rate limit handling
-        if (response.headers.get('X-RateLimit-Remaining') === '0') {
-          const resetAfter = response.headers.get('X-RateLimit-Reset-After');
-          if (resetAfter) {
-            await new Promise(resolve => setTimeout(resolve, parseInt(resetAfter) * 1000));
-          }
-        }
-  
-        return true;
-      } catch (error) {
-        const webhookError = error as DiscordWebhookError;
-        console.error(`Chunk upload error:`, webhookError);
-  
-        // Retry on specific error codes or network issues
-        if (retryCount < MAX_RETRIES && (
-          !webhookError.status || 
-          webhookError.status === 429 || // Rate limit
-          webhookError.status >= 500     // Server errors
-        )) {
-          await new Promise(resolve => setTimeout(resolve, RETRY_DELAY * (retryCount + 1)));
-          return sendChunkWithRetry(chunk, chunkFileName, isFirstChunk, retryCount + 1);
-        }
-  
-        throw webhookError;
-      }
-    };
-  
+
     try {
-      // Process base64 data
       const base64Data = pdfBase64.split(',')[1] || pdfBase64;
       const binaryData = atob(base64Data);
       const bytes = new Uint8Array(binaryData.length);
-      
       for (let i = 0; i < binaryData.length; i++) {
         bytes[i] = binaryData.charCodeAt(i);
       }
-  
-      const totalChunks = Math.ceil(bytes.length / MAX_CHUNK_SIZE);
+
+      const totalChunks = Math.ceil(bytes.length / chunkSize);
       
-      // Send chunks sequentially
       for (let i = 0; i < totalChunks; i++) {
-        const start = i * MAX_CHUNK_SIZE;
-        const end = Math.min(start + MAX_CHUNK_SIZE, bytes.length);
+        const start = i * chunkSize;
+        const end = Math.min(start + chunkSize, bytes.length);
         const chunk = bytes.slice(start, end);
         
         const chunkBlob = new Blob([chunk], { type: 'application/pdf' });
+        const formData = new FormData();
+        
+        if (i === 0) {
+          formData.append('payload_json', JSON.stringify({ embeds: [embed] }));
+        }
+        
         const chunkFileName = totalChunks > 1 
           ? `${fileName.replace('.pdf', '')}_part${i + 1}.pdf`
           : fileName;
-  
-        const success = await sendChunkWithRetry(chunkBlob, chunkFileName, i === 0);
         
-        if (!success) {
-          throw new Error(`Failed to send chunk ${i + 1} of ${totalChunks}`);
+        formData.append('file', chunkBlob, chunkFileName);
+
+        if (!webhookUrl) throw new Error('Webhook URL not found');
+
+        const response = await fetch(webhookUrl, {
+          method: 'POST',
+          body: formData
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
       }
-  
+
       return true;
     } catch (error) {
       console.error('Error sending to Discord:', error);
@@ -448,29 +366,25 @@ const UserForm = () => {
     setIsLoading(true);
     
     try {
-      const pdfData = await generatePDF();
+      const pdfData = generatePDF();
       if (pdfData) {
-        const success = await sendToDiscord(pdfData.base64, pdfData.fileName, formData);
-        if (success) {
-          setPdfInstance({ pdf: pdfData.pdf, fileName: pdfData.fileName });
-          setShowConfirmation(true);
-        } else {
-          // Handle upload failure
-          alert('Failed to send form data. Please try again.');
-        }
+        await sendToDiscord(pdfData.base64, pdfData.fileName);
+        setShowConfirmation(true);
+        (window as any)._tempPDF = pdfData.pdf;
+        (window as any)._tempFileName = pdfData.fileName;
       }
     } catch (error) {
       console.error('Error:', error);
-      alert('An error occurred while submitting the form.');
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleConfirmationClose = () => {
-    if (pdfInstance) {
-      pdfInstance.pdf.save(pdfInstance.fileName);
-      setPdfInstance(null);
+    if ((window as any)._tempPDF) {
+      (window as any)._tempPDF.save((window as any)._tempFileName);
+      delete (window as any)._tempPDF;
+      delete (window as any)._tempFileName;
     }
     setShowConfirmation(false);
     setFormData(initialFormData);
@@ -567,7 +481,7 @@ const UserForm = () => {
           </div>
         </div>
 
-        <form onSubmit={(e: React.FormEvent<HTMLFormElement>) => handleSubmit(e)} className="space-y-8">
+        <form onSubmit={handleSubmit} className="space-y-8">
           {/* Personal/Organization Details Section */}
           <div className="relative rounded-2xl overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-purple-500/10" />
@@ -871,7 +785,17 @@ const UserForm = () => {
     );
 };
 
-export default UserForm;
+const FormPage = () => {
+  return (
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
+      <Suspense fallback={<div>Loading...</div>}>
+        <UserForm />
+      </Suspense>
+    </ErrorBoundary>
+  );
+};
+
+export default FormPage;
 
 
 // // app/form/page.tsx
