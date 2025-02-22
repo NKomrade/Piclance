@@ -22,6 +22,18 @@ interface FormData {
   communicationPreference: string[];
 }
 
+interface WindowWithPDF extends Window {
+  _tempPDF: jsPDF | null;
+  _tempFileName: string | null;
+}
+
+// Add type for PDF generation result
+interface PDFGenerationResult {
+  pdf: jsPDF;
+  fileName: string;
+  base64: string;
+}
+
 interface Category {
   value: string;
   label: string;
@@ -137,7 +149,7 @@ const UserForm = () => {
     );
   };
 
-  const generatePDF = () => {
+  const generatePDF = (): PDFGenerationResult => {
     const today = new Date().toLocaleDateString('en-US', { 
       day: 'numeric', 
       month: 'short', 
@@ -354,8 +366,10 @@ const UserForm = () => {
       if (pdfData) {
         await sendToDiscord(pdfData.base64, pdfData.fileName);
         setShowConfirmation(true);
-        (window as any)._tempPDF = pdfData.pdf;
-        (window as any)._tempFileName = pdfData.fileName;
+        // Type-safe window access
+        const customWindow = window as unknown as WindowWithPDF;
+        customWindow._tempPDF = pdfData.pdf;
+        customWindow._tempFileName = pdfData.fileName;
       }
     } catch (error) {
       console.error('Error:', error);
@@ -365,10 +379,11 @@ const UserForm = () => {
   };
 
   const handleConfirmationClose = () => {
-    if ((window as any)._tempPDF) {
-      (window as any)._tempPDF.save((window as any)._tempFileName);
-      delete (window as any)._tempPDF;
-      delete (window as any)._tempFileName;
+    const customWindow = window as unknown as WindowWithPDF;
+    if (customWindow._tempPDF) {
+      customWindow._tempPDF.save(customWindow._tempFileName || 'form.pdf');
+      customWindow._tempPDF = null;
+      customWindow._tempFileName = null;
     }
     setShowConfirmation(false);
     setFormData(initialFormData);
